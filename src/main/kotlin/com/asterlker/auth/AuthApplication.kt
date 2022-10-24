@@ -5,7 +5,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class AuthApplication
-
+// test
 fun main(args: Array<String>) {
     runApplication<AuthApplication>(*args)
 }
