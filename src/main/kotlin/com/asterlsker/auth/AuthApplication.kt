@@ -1,4 +1,4 @@
-package com.asterlker.auth
+package com.asterlsker.auth
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
