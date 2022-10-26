@@ -1,0 +1,54 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+service AuthService {
+  rpc SignIn(SignInRequest) returns (SignInResponse){};
+  rpc SignOut(SignOutRequest) returns (google.protobuf.Empty){};
+  rpc Decode(DecodeRequest) returns(DecodeResponse){};
+  rpc Refresh(RefreshRequest) returns (RefreshResponse){};
+}
+
+// SignIn
+message SignInRequest {
+  Provider provider = 1;
+  string id_token = 2;
+}
+message SignInResponse {
+  LoginStatus status = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+}
+
+// SignOut
+message SignOutRequest {
+  string access_token = 1;
+}
+
+// Decode
+message DecodeRequest{
+  string access_token = 1;
+}
+message DecodeResponse{
+  string member_id = 1;
+}
+
+// Refresh
+message RefreshRequest{
+  string refresh_token = 1;
+}
+message RefreshResponse{
+  string access_token = 1;
+}
+
+// Enums
+enum Provider {
+  GOOGLE = 0;
+  APPLE = 1;
+  KAKAO = 2;
+  NAVER = 3;
+}
+
+enum LoginStatus {
+  NEW = 0;
+  EXIST = 1;
+}

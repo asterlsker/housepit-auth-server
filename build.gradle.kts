@@ -17,6 +17,10 @@ group = "com.asterlsker"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
+springBoot {
+    mainClass.value("com.asterlsker.AuthApplication")
+}
+
 repositories {
     mavenCentral()
 }
@@ -98,14 +102,14 @@ sourceSets {
 // build 시점에 protobuf 생성
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:$grpcKotlinVersion"
+        artifact = "com.google.protobuf:protoc:$grpcVersion"
     }
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcProtoVersion"
         }
         id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk17@jar"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk7@jar"
         }
     }
     generateProtoTasks {
