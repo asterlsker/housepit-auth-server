@@ -1,6 +1,13 @@
+import com.google.protobuf.gradle.*
+
+val grpcVersion = "3.19.4"
+val grpcKotlinVersion = "1.2.1"
+val grpcProtoVersion = "1.50.1"
+
 plugins {
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    id("com.google.protobuf") version "0.8.18"
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
@@ -21,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("net.devh:grpc-spring-boot-starter:2.13.1.RELEASE")
 
     // Kotlin library
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -40,6 +48,12 @@ dependencies {
 
     // Annotation Processing Tool
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    // GRPC
+    implementation("io.grpc:grpc-protobuf:$grpcProtoVersion") // protobuf 로 만들어지는 서버 입장의 파일에서 필요한 메서드 등을 포함하고 있는 의존성
+    implementation("io.grpc:grpc-kotlin-stub:1.2.0")
+//    implementation("io.grpc:grpc-netty-shaded:$grpcProtoVersion")
+    implementation("com.google.protobuf:protobuf-kotlin:$grpcVersion") // protocol buffer 를 kotlin 파일로 컴파일하는데 사용되는 의존성
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -66,6 +80,45 @@ tasks.withType<Test> {
 
 sourceSets.main.configure {
     resources.srcDirs("src/main/resources/common", "src/main/resources/config")
+}
+
+// build 이후에 Stub 클래스가 생성되는 directory 에 대해서 target 으로 추가하기 위한 설정.
+// 해당 설정을 통해 소스 내에서 Stub 클래스 참조 가능
+sourceSets {
+    getByName("main") {
+        java {
+            srcDirs(
+                "build/generated/source/proto/main/java",
+                "build/generated/source/proto/main/kotlin"
+            )
+        }
+    }
+}
+
+// build 시점에 protobuf 생성
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$grpcKotlinVersion"
+    }
+    plugins {
+        id("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+        }
+        id("grpckt") {
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk17@jar"
+        }
+    }
+    generateProtoTasks {
+        all().forEach {
+            it.plugins {
+                id("grpc")
+                id("grpckt")
+            }
+            it.builtins {
+                id("kotlin")
+            }
+        }
+    }
 }
 
 tasks.jar { enabled = false }
