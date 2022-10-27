@@ -15,7 +15,7 @@ class AuthMapper {
 
         fun of(response: AuthCommand.SignInResponse): Auth.SignInResponse {
             val prototype = Auth.SignInResponse.newBuilder().apply {
-                status = Auth.LoginStatus.NEW
+                status = Auth.SignInStatus.NEW
                 accessToken = response.accessToken
                 refreshToken = response.refreshToken
             }

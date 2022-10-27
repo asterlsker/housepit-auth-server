@@ -14,6 +14,7 @@ class AuthFacade(
     private val jwtProvider: JwtProvider
 ) {
 
+    // TODO AuthService 만들어서 리팩토링 필요 -> authService 에서 memberReader 참조하게 하기
     /**
      * 1. idToken -> email 등은 분리
      * 2. email 을 통해서 회원이 존재하는지 확인

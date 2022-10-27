@@ -1,7 +1,7 @@
 import com.google.protobuf.gradle.*
 
 val grpcVersion = "3.19.4"
-val grpcKotlinVersion = "1.2.1"
+val grpcKotlinVersion = "1.3.0"
 val grpcProtoVersion = "1.50.1"
 
 plugins {
@@ -118,7 +118,7 @@ protobuf {
             artifact = "io.grpc:protoc-gen-grpc-java:$grpcProtoVersion"
         }
         id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk7@jar"
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$grpcKotlinVersion:jdk8@jar"
         }
     }
     generateProtoTasks {
