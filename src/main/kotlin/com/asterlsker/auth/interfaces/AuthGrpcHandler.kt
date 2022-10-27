@@ -1,13 +1,18 @@
 package com.asterlsker.auth.interfaces
 
-import refreshRequest
+import AuthServiceGrpcKt
+import com.asterlsker.auth.application.AuthFacade
+import com.asterlsker.auth.interfaces.mapper.AuthMapper
+import net.devh.boot.grpc.server.service.GrpcService
 
 
-class AuthGrpcHandler {
+@GrpcService
+class AuthGrpcHandler(
+    private val authFacade: AuthFacade
+): AuthServiceGrpcKt.AuthServiceCoroutineImplBase() {
 
-    fun test() {
-        val test = refreshRequest {
-            refreshToken = "1"
-        }
+    override suspend fun signIn(request: Auth.SignInRequest): Auth.SignInResponse {
+        authFacade.signIn(AuthMapper.of(request))
+        return super.signIn(request)
     }
 }

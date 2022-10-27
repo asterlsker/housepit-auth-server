@@ -1,8 +1,16 @@
 package com.asterlsker.auth.domain.authorization
 
-enum class Provider(
-    val code: String
-){
-    GOOGLE("0"), APPLE("1"), KAKAO("2"), NAVER("3"),
+import com.asterlsker.auth.common.exception.domain.NotFoundProviderException
+
+enum class Provider {
+
+    GOOGLE, APPLE, KAKAO, NAVER,
     ;
+
+    companion object {
+        fun findByName(name: String): Provider {
+            return Provider.values().find { it.name == name }
+                ?: throw NotFoundProviderException()
+        }
+    }
 }

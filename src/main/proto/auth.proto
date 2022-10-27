@@ -25,18 +25,18 @@ message SignOutRequest {
 }
 
 // Decode
-message DecodeRequest{
+message DecodeRequest {
   string access_token = 1;
 }
-message DecodeResponse{
+message DecodeResponse {
   string member_id = 1;
 }
 
 // Refresh
-message RefreshRequest{
+message RefreshRequest {
   string refresh_token = 1;
 }
-message RefreshResponse{
+message RefreshResponse {
   string access_token = 1;
 }
 

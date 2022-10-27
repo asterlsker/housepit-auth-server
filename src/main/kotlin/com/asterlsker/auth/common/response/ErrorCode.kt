@@ -21,6 +21,7 @@ enum class ErrorCode(
     REDIS_CLIENT(HttpStatus.BAD_REQUEST, "C1005", "Redis Client Error", Level.ERROR),
     DUPLICATED_EMAIL(HttpStatus.BAD_REQUEST, "C1006", "Duplicated Email"),
     NOT_EXIST_MEMBER(HttpStatus.BAD_REQUEST, "C1007", "Not Exists Member"),
+    NOT_FOUND_PROVIDER(HttpStatus.BAD_REQUEST, "C1008", "Not Found Provider"),
 
     // Hierarchy
     DOMAIN(HttpStatus.BAD_REQUEST, "H1001", "Domain Layer Error"),

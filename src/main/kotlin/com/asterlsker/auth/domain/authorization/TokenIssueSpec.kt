@@ -1,6 +1,6 @@
 package com.asterlsker.auth.domain.authorization
 
 data class TokenIssueSpec(
-    val email: String,
+    val payload: String,
     val provider: Provider
 )
