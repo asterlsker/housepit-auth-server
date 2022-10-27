@@ -12,7 +12,7 @@ class AuthGrpcHandler(
 ): AuthServiceGrpcKt.AuthServiceCoroutineImplBase() {
 
     override suspend fun signIn(request: Auth.SignInRequest): Auth.SignInResponse {
-        authFacade.signIn(AuthMapper.of(request))
-        return super.signIn(request)
+        val response = authFacade.signIn(AuthMapper.of(request))
+        return AuthMapper.of(response)
     }
 }

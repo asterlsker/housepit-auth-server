@@ -9,7 +9,6 @@ class AuthCommand {
 
     data class SignInResponse(
         val accessToken: String,
-        val refreshToken: String,
-        val type: SignInType
+        val refreshToken: String
     )
 }

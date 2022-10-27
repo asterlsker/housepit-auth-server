@@ -3,6 +3,7 @@ import "google/protobuf/empty.proto";
 
 service AuthService {
   rpc SignIn(SignInRequest) returns (SignInResponse){};
+  rpc Link(LinkRequest) returns (google.protobuf.Empty){};
   rpc SignOut(SignOutRequest) returns (google.protobuf.Empty){};
   rpc Decode(DecodeRequest) returns(DecodeResponse){};
   rpc Refresh(RefreshRequest) returns (RefreshResponse){};
@@ -14,9 +15,16 @@ message SignInRequest {
   string id_token = 2;
 }
 message SignInResponse {
-  LoginStatus status = 1;
+  SignInStatus status = 1;
   string access_token = 2;
   string refresh_token = 3;
+}
+
+// Link
+message LinkRequest{
+  string access_token = 1;
+  Provider provider = 2;
+  string id_token = 3;
 }
 
 // SignOut
@@ -25,18 +33,18 @@ message SignOutRequest {
 }
 
 // Decode
-message DecodeRequest {
+message DecodeRequest{
   string access_token = 1;
 }
-message DecodeResponse {
+message DecodeResponse{
   string member_id = 1;
 }
 
 // Refresh
-message RefreshRequest {
+message RefreshRequest{
   string refresh_token = 1;
 }
-message RefreshResponse {
+message RefreshResponse{
   string access_token = 1;
 }
 
@@ -48,7 +56,7 @@ enum Provider {
   NAVER = 3;
 }
 
-enum LoginStatus {
+enum SignInStatus {
   NEW = 0;
   EXIST = 1;
 }

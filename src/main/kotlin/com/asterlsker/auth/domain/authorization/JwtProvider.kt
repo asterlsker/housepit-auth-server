@@ -9,7 +9,7 @@ class JwtProvider(
     private val objectMapper: ObjectMapper
 ) {
 
-    private val log = LoggerFactory.getLogger(this::class.java)
+    private val log = LoggerFactory.getLogger(javaClass)
 
     fun issueTokens(request: TokenIssueSpec): TokenResponse {
         val payload = objectMapper.writeValueAsString(request)

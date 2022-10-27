@@ -12,5 +12,14 @@ class AuthMapper {
                 provider = Provider.findByName(request.provider.name)
             )
         }
+
+        fun of(response: AuthCommand.SignInResponse): Auth.SignInResponse {
+            val prototype = Auth.SignInResponse.newBuilder().apply {
+                status = Auth.LoginStatus.NEW
+                accessToken = response.accessToken
+                refreshToken = response.refreshToken
+            }
+            return prototype.build()
+        }
     }
 }

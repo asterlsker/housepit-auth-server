@@ -46,6 +46,7 @@ dependencies {
 
     // Google
     implementation("com.google.guava:guava:31.1-jre")
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
 
     // apache
     implementation("org.apache.commons:commons-lang3")
@@ -56,7 +57,8 @@ dependencies {
     // GRPC
     implementation("io.grpc:grpc-protobuf:$grpcProtoVersion") // protobuf 로 만들어지는 서버 입장의 파일에서 필요한 메서드 등을 포함하고 있는 의존성
     implementation("io.grpc:grpc-kotlin-stub:1.2.0")
-//    implementation("io.grpc:grpc-netty-shaded:$grpcProtoVersion")
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
+    implementation("io.grpc:grpc-netty-shaded:$grpcProtoVersion")
     implementation("com.google.protobuf:protobuf-kotlin:$grpcVersion") // protocol buffer 를 kotlin 파일로 컴파일하는데 사용되는 의존성
 
     // Test
@@ -69,6 +71,13 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.3")
     testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
     testImplementation("io.kotest:kotest-assertions-core:5.1.0")
+
+    // All-open
+    allOpen {
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperClass")
+        annotation("javax.persistence.Embeddable")
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

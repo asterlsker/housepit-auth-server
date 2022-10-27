@@ -3,7 +3,6 @@ package com.asterlsker.auth.application
 import com.asterlsker.auth.domain.authorization.AuthCommand
 import com.asterlsker.auth.domain.authorization.JwtDecoder
 import com.asterlsker.auth.domain.authorization.JwtProvider
-import com.asterlsker.auth.domain.authorization.SignInType
 import com.asterlsker.auth.domain.authorization.TokenIssueSpec
 import com.asterlsker.auth.domain.member.MemberService
 import org.springframework.stereotype.Component
@@ -27,10 +26,7 @@ class AuthFacade(
             payload = email,
             provider = request.provider
         ))
-        return AuthCommand.SignInResponse(
-            accessToken = tokens.accessToken,
-            refreshToken = tokens.refreshToken,
-            type = SignInType.NEW
-        )
+
+        return AuthCommand.SignInResponse(accessToken = tokens.accessToken, refreshToken = tokens.refreshToken)
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class ExceptionHandlerAdvice {
 
-    private val log = LoggerFactory.getLogger(this::class.java)
+    private val log = LoggerFactory.getLogger(javaClass)
 
     @ExceptionHandler(ConvertException::class)
     fun convertException(e: ConvertException): ResponseEntity<CommonResponse<*>> {

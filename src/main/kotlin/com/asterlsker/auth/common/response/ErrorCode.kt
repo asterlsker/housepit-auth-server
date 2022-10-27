@@ -22,6 +22,7 @@ enum class ErrorCode(
     DUPLICATED_EMAIL(HttpStatus.BAD_REQUEST, "C1006", "Duplicated Email"),
     NOT_EXIST_MEMBER(HttpStatus.BAD_REQUEST, "C1007", "Not Exists Member"),
     NOT_FOUND_PROVIDER(HttpStatus.BAD_REQUEST, "C1008", "Not Found Provider"),
+    INVALID_PHONE(HttpStatus.BAD_REQUEST, "C1009", "Invalid Phone"),
 
     // Hierarchy
     DOMAIN(HttpStatus.BAD_REQUEST, "H1001", "Domain Layer Error"),
