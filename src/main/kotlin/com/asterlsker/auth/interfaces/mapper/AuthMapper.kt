@@ -1,7 +1,7 @@
 package com.asterlsker.auth.interfaces.mapper
 
 import com.asterlsker.auth.domain.authorization.AuthCommand
-import com.asterlsker.auth.domain.authorization.Provider
+import com.asterlsker.auth.domain.model.Provider
 
 class AuthMapper {
 

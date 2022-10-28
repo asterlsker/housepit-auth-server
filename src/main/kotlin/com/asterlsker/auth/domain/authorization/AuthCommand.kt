@@ -1,5 +1,7 @@
 package com.asterlsker.auth.domain.authorization
 
+import com.asterlsker.auth.domain.model.Provider
+
 class AuthCommand {
 
     data class SignInRequest(

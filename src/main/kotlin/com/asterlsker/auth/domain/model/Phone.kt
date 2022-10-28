@@ -1,4 +1,4 @@
-package com.asterlsker.auth.domain.member
+package com.asterlsker.auth.domain.model
 
 import com.asterlsker.auth.common.exception.domain.InvalidPhoneException
 import com.google.i18n.phonenumbers.PhoneNumberUtil

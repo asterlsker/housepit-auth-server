@@ -1,4 +1,4 @@
-package com.asterlsker.auth.domain.authorization
+package com.asterlsker.auth.domain.model
 
 import com.asterlsker.auth.common.exception.domain.NotFoundProviderException
 

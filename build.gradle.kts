@@ -32,7 +32,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("net.devh:grpc-spring-boot-starter:2.13.1.RELEASE")
+
+    // All-open
+    allOpen {
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperClass")
+        annotation("javax.persistence.Embeddable")
+    }
 
     // Kotlin library
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -61,6 +69,9 @@ dependencies {
     implementation("io.grpc:grpc-netty-shaded:$grpcProtoVersion")
     implementation("com.google.protobuf:protobuf-kotlin:$grpcVersion") // protocol buffer 를 kotlin 파일로 컴파일하는데 사용되는 의존성
 
+    // jwt
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
@@ -71,13 +82,6 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.3")
     testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
     testImplementation("io.kotest:kotest-assertions-core:5.1.0")
-
-    // All-open
-    allOpen {
-        annotation("javax.persistence.Entity")
-        annotation("javax.persistence.MappedSuperClass")
-        annotation("javax.persistence.Embeddable")
-    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
