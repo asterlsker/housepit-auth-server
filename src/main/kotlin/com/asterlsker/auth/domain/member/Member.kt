@@ -14,7 +14,7 @@ import javax.persistence.Table
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: String? = null,
 
     @Column
     val userName: String,

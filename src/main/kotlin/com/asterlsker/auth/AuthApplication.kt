@@ -1,8 +1,10 @@
 package com.asterlsker.auth
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 
+@ConfigurationPropertiesScan("com.asterlsker.auth.common.properties")
 @SpringBootApplication
 class AuthApplication
 
