@@ -30,6 +30,35 @@ class JwtProvider(
         )
     }
 
+    fun validateToken(accessToken: String): Boolean =
+        try {
+            val claims = Jwts.parser().setSigningKey(jwtProperties.token.secretKey).parseClaimsJws(accessToken)
+            val isNotExpired = !claims.body.expiration.before(Date())
+            isNotExpired
+        } catch (e: Exception) {
+            log.error("# Invalid Token: $accessToken")
+            false
+        }
+
+    fun releaseTokens(accessToken: String) {
+        val payload = getPayload(accessToken)
+        val refreshToken = redisClient.get(
+            cacheName = RFK_CACHE_NAME,
+            key = RFK_KEY + payload,
+            String::class.java
+        )
+
+        refreshToken?.let {
+            redisClient.set(
+                cacheName = RFK_CACHE_NAME,
+                key = RFK_KEY + payload,
+                value = "Released",
+                expireTime = 0,
+                timeUnit = TimeUnit.MILLISECONDS
+            )
+        }
+    }
+
     private fun issueAccessToken(payload: String): String {
         val now = Date()
         val validity = Date(now.time + jwtProperties.token.accessTokenExpireTime.toMilliSec())
@@ -67,4 +96,7 @@ class JwtProvider(
 
     private fun createClaims(payload: String) = Jwts.claims().setSubject(payload)
 
+    private fun getPayload(accessToken: String) = Jwts.parser()
+        .setSigningKey(jwtProperties.token.secretKey)
+        .parseClaimsJws(accessToken).body.subject
 }

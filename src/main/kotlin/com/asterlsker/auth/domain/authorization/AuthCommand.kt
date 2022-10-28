@@ -13,4 +13,8 @@ class AuthCommand {
         val accessToken: String,
         val refreshToken: String
     )
+
+    data class SignOutRequest(
+        val accessToken: String
+    )
 }

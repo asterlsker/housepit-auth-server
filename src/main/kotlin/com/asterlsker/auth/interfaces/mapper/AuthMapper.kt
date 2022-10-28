@@ -21,5 +21,9 @@ class AuthMapper {
             }
             return prototype.build()
         }
+
+        fun of(request: Auth.SignOutRequest): AuthCommand.SignOutRequest {
+            return AuthCommand.SignOutRequest(request.accessToken)
+        }
     }
 }

@@ -16,4 +16,8 @@ class AuthFacade(
     fun signIn(request: AuthCommand.SignInRequest): AuthCommand.SignInResponse {
         return authService.signIn(request)
     }
+
+    fun signOut(request: AuthCommand.SignOutRequest) {
+        authService.signOut(request)
+    }
 }
