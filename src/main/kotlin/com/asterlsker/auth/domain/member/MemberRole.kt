@@ -23,8 +23,4 @@ class MemberRole(
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     val role: Role,
-
-    @JoinColumn(name = "member_id", nullable = false)
-    @ManyToOne
-    val member: Member
 ): BaseEntity()

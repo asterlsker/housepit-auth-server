@@ -2,6 +2,7 @@ package com.asterlsker.auth.domain.authorization
 
 import com.asterlsker.auth.common.constant.RFK_CACHE_NAME
 import com.asterlsker.auth.common.constant.RFK_KEY
+import com.asterlsker.auth.common.exception.domain.InvalidTokenException
 import com.asterlsker.auth.common.properties.JwtProperties
 import com.asterlsker.auth.common.support.RedisClient
 import com.asterlsker.auth.common.support.toMilliSec
@@ -96,7 +97,9 @@ class JwtProvider(
 
     private fun createClaims(payload: String) = Jwts.claims().setSubject(payload)
 
-    private fun getPayload(accessToken: String) = Jwts.parser()
-        .setSigningKey(jwtProperties.token.secretKey)
-        .parseClaimsJws(accessToken).body.subject
+    fun getPayload(accessToken: String): String {
+        return Jwts.parser()
+            .setSigningKey(jwtProperties.token.secretKey)
+            .parseClaimsJws(accessToken).body.subject ?: throw InvalidTokenException()
+    }
 }

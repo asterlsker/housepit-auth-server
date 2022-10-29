@@ -5,7 +5,7 @@ import com.asterlsker.auth.domain.model.Provider
 class AuthCommand {
 
     data class SignInRequest(
-        val token: String,
+        val oAuthToken: String,
         val provider: Provider
     )
 
@@ -16,5 +16,11 @@ class AuthCommand {
 
     data class SignOutRequest(
         val accessToken: String
+    )
+
+    data class LinkRequest(
+        val accessToken: String,
+        val oAuthToken: String,
+        val provider: Provider
     )
 }

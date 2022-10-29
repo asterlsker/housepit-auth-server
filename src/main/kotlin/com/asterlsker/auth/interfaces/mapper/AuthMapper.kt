@@ -8,7 +8,7 @@ class AuthMapper {
     companion object {
         fun of(request: Auth.SignInRequest): AuthCommand.SignInRequest {
             return AuthCommand.SignInRequest(
-                token = request.idToken,
+                oAuthToken = request.idToken,
                 provider = Provider.findByName(request.provider.name)
             )
         }
@@ -24,6 +24,14 @@ class AuthMapper {
 
         fun of(request: Auth.SignOutRequest): AuthCommand.SignOutRequest {
             return AuthCommand.SignOutRequest(request.accessToken)
+        }
+
+        fun of(request: Auth.LinkRequest): AuthCommand.LinkRequest {
+            return AuthCommand.LinkRequest(
+                oAuthToken = request.idToken,
+                accessToken = request.accessToken,
+                provider = Provider.findByName(request.provider.name)
+            )
         }
     }
 }

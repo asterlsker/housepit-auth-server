@@ -23,6 +23,7 @@ class AuthGrpcHandler(
     }
 
     override suspend fun link(request: Auth.LinkRequest): Empty {
+        authFacade.link(AuthMapper.of(request))
         return super.link(request)
     }
 

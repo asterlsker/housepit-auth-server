@@ -26,8 +26,4 @@ class MemberSocialLogin(
 
     @Embedded
     val email: Email,
-
-    @JoinColumn(name = "member_id", nullable = false)
-    @ManyToOne
-    val member: Member
 ): BaseEntity()
