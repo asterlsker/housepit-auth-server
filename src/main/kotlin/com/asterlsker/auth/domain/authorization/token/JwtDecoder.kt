@@ -1,4 +1,4 @@
-package com.asterlsker.auth.domain.authorization
+package com.asterlsker.auth.domain.authorization.token
 
 import org.springframework.stereotype.Component
 
