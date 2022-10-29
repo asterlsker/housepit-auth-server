@@ -28,19 +28,11 @@ repositories {
 dependencies {
     // starter
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.data:spring-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("net.devh:grpc-spring-boot-starter:2.13.1.RELEASE")
-
-    // All-open
-    allOpen {
-        annotation("javax.persistence.Entity")
-        annotation("javax.persistence.MappedSuperClass")
-        annotation("javax.persistence.Embeddable")
-    }
 
     // Kotlin library
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -50,6 +42,7 @@ dependencies {
 
     // Database
     runtimeOnly("com.h2database:h2")
+    implementation("io.r2dbc:r2dbc-h2")
     implementation("org.redisson:redisson:3.17.6")
 
     // Google

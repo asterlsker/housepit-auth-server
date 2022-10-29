@@ -25,10 +25,13 @@ enum class ErrorCode(
     INVALID_PHONE(HttpStatus.BAD_REQUEST, "C1009", "Invalid Phone"),
     EXIST_MEMBER(HttpStatus.BAD_REQUEST, "C1010", "Exists Member"),
     INVALID_EMAIL(HttpStatus.BAD_REQUEST, "C1011", "Invalid Email"),
+    ENTITY_NOT_FOUND(HttpStatus.BAD_REQUEST, "C1012", "Entity Not Found"),
+    ENTITY_SAVE(HttpStatus.BAD_REQUEST, "C1013", "Entity Save Error"),
 
     // Hierarchy
     DOMAIN(HttpStatus.BAD_REQUEST, "H1001", "Domain Layer Error"),
     CONVERT(HttpStatus.BAD_REQUEST, "H1002", "Convert Error"),
     VALIDATION(HttpStatus.BAD_REQUEST, "H1003", "Validation Error"),
+    ENTITY(HttpStatus.BAD_REQUEST, "H1004", "Entity Error"),
     ;
 }

@@ -11,17 +11,17 @@ class AuthFacade(
 ) {
 
     @Transactional
-    fun signIn(request: AuthCommand.SignInRequest): AuthCommand.SignInResponse {
+    suspend fun signIn(request: AuthCommand.SignInRequest): AuthCommand.SignInResponse {
         return authService.signIn(request)
     }
 
     @Transactional
-    fun signOut(request: AuthCommand.SignOutRequest) {
+    suspend fun signOut(request: AuthCommand.SignOutRequest) {
         authService.signOut(request)
     }
 
     @Transactional
-    fun link(request: AuthCommand.LinkRequest) {
+    suspend fun link(request: AuthCommand.LinkRequest) {
         authService.link(request)
     }
 }
