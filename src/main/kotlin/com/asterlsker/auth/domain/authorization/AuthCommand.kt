@@ -23,4 +23,21 @@ class AuthCommand {
         val oAuthToken: String,
         val provider: Provider
     )
+
+    data class DecodeRequest(
+        val accessToken: String
+    )
+
+    data class DecodeResponse(
+        val memberId: String
+    )
+
+    data class RefreshRequest(
+        val refreshToken: String
+    )
+
+    data class RefreshResponse(
+        val accessToken: String,
+        val refreshToken: String
+    )
 }

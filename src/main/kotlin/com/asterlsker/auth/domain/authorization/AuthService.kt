@@ -25,7 +25,7 @@ class AuthService(
         val rawEmail = jwtDecoder.decodeBase64(request.oAuthToken)
         val validEmail = Email(rawEmail)
         if (!memberReader.existsByEmail(validEmail)) throw NotExistMemberException()
-        val tokens = jwtProvider.issueTokens(TokenIssueSpec(payload = rawEmail, provider = request.provider))
+        val tokens = jwtProvider.issueTokens(TokenIssueSpec(email = rawEmail, provider = request.provider))
 
         return AuthCommand.SignInResponse(accessToken = tokens.accessToken, refreshToken = tokens.refreshToken)
     }
@@ -47,9 +47,25 @@ class AuthService(
 
         // 현재 로그인되어있는 email 로 회원 조회
         val payload = jwtProvider.getPayload(request.accessToken)
-        val member = memberReader.findByEmail(Email(payload))
+        val member = memberReader.findByEmail(Email(payload.email)) ?: throw NotExistMemberException()
 
         member.link(provider = request.provider, email = validNewEmail)
         memberStore.save(member)
+    }
+
+    @Transactional
+    suspend fun decode(request: AuthCommand.DecodeRequest): AuthCommand.DecodeResponse {
+        val payload = jwtProvider.getPayload(request.accessToken)
+        val member = memberReader.findByEmail(Email(payload.email)) ?: throw NotExistMemberException()
+        return member.id!!.let { AuthCommand.DecodeResponse(it) }
+    }
+
+    @Transactional
+    suspend fun refresh(request: AuthCommand.RefreshRequest): AuthCommand.RefreshResponse {
+        val response = jwtProvider.refreshTokens(request.refreshToken)
+        return AuthCommand.RefreshResponse(
+            accessToken = response.accessToken,
+            refreshToken = response.refreshToken
+        )
     }
 }

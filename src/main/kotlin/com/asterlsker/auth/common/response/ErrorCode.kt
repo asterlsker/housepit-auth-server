@@ -27,6 +27,7 @@ enum class ErrorCode(
     INVALID_EMAIL(HttpStatus.BAD_REQUEST, "C1011", "Invalid Email"),
     ENTITY_NOT_FOUND(HttpStatus.BAD_REQUEST, "C1012", "Entity Not Found"),
     ENTITY_SAVE(HttpStatus.BAD_REQUEST, "C1013", "Entity Save Error"),
+    EXPIRED_TOKEN(HttpStatus.BAD_REQUEST, "C1014", "Expired Token"),
 
     // Hierarchy
     DOMAIN(HttpStatus.BAD_REQUEST, "H1001", "Domain Layer Error"),

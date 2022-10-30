@@ -17,8 +17,8 @@ class MemberReaderImpl(
         return result.block() ?: throw EntityException(ErrorCode.ENTITY_NOT_FOUND)
     }
 
-    override fun findByEmail(email: Email): Member {
+    override fun findByEmail(email: Email): Member? {
         val memberEntity = memberRepository.findByEmail(email)
-        return memberEntity.block()?.toDomain() ?: throw EntityException(ErrorCode.ENTITY_NOT_FOUND)
+        return memberEntity.block()?.toDomain()
     }
 }

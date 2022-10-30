@@ -6,5 +6,5 @@ interface MemberReader {
 
     fun existsByEmail(email: Email): Boolean
 
-    fun findByEmail(email: Email): Member
+    fun findByEmail(email: Email): Member?
 }

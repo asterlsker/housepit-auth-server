@@ -2,6 +2,7 @@ package com.asterlsker.auth.domain.authorization.token
 
 import com.asterlsker.auth.common.constant.RFK_CACHE_NAME
 import com.asterlsker.auth.common.constant.RFK_KEY
+import com.asterlsker.auth.common.exception.domain.ExpiredTokenException
 import com.asterlsker.auth.common.exception.domain.InvalidTokenException
 import com.asterlsker.auth.common.properties.JwtProperties
 import com.asterlsker.auth.common.support.RedisClient
@@ -31,18 +32,8 @@ class JwtProvider(
         )
     }
 
-    fun validateToken(accessToken: String): Boolean =
-        try {
-            val claims = Jwts.parser().setSigningKey(jwtProperties.token.secretKey).parseClaimsJws(accessToken)
-            val isNotExpired = !claims.body.expiration.before(Date())
-            isNotExpired
-        } catch (e: Exception) {
-            log.error("# Invalid Token: $accessToken")
-            false
-        }
-
     fun releaseTokens(accessToken: String) {
-        val payload = getPayload(accessToken)
+        val payload = getRawPayload(accessToken)
         val refreshToken = redisClient.get(
             cacheName = RFK_CACHE_NAME,
             key = RFK_KEY + payload,
@@ -59,6 +50,37 @@ class JwtProvider(
             )
         }
     }
+
+    fun refreshTokens(refreshToken: String): TokenResponse {
+        val payload = getRawPayload(refreshToken)
+        val refreshTokenInStore = redisClient.get(
+            cacheName = RFK_CACHE_NAME,
+            key = RFK_KEY + payload,
+            String::class.java
+        )
+
+        refreshTokenInStore?.let {
+            if (!validateToken(refreshTokenInStore)) {
+                log.warn("# Expired RefreshToken: $refreshTokenInStore")
+                throw ExpiredTokenException()
+            }
+        }
+
+        return TokenResponse(
+            accessToken = issueAccessToken(payload),
+            refreshToken = issueRefreshToken(payload)
+        )
+    }
+
+    fun validateToken(token: String): Boolean =
+        try {
+            val claims = Jwts.parser().setSigningKey(jwtProperties.token.secretKey).parseClaimsJws(token)
+            val isNotExpired = !claims.body.expiration.before(Date())
+            isNotExpired
+        } catch (e: Exception) {
+            log.error("# Invalid Token: $token")
+            false
+        }
 
     private fun issueAccessToken(payload: String): String {
         val now = Date()
@@ -97,7 +119,11 @@ class JwtProvider(
 
     private fun createClaims(payload: String) = Jwts.claims().setSubject(payload)
 
-    fun getPayload(accessToken: String): String {
+    fun getPayload(accessToken: String): TokenIssueSpec {
+        return objectMapper.readValue(getRawPayload(accessToken), TokenIssueSpec::class.java)
+    }
+
+    private fun getRawPayload(accessToken: String): String {
         return Jwts.parser()
             .setSigningKey(jwtProperties.token.secretKey)
             .parseClaimsJws(accessToken).body.subject ?: throw InvalidTokenException()

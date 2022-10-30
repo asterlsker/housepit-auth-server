@@ -33,5 +33,19 @@ class AuthMapper {
                 provider = Provider.findByName(request.provider.name)
             )
         }
+
+        fun of(request: Auth.DecodeRequest): AuthCommand.DecodeRequest {
+            return AuthCommand.DecodeRequest(request.accessToken)
+        }
+
+        fun of(response: AuthCommand.DecodeResponse): Auth.DecodeResponse {
+            return Auth.DecodeResponse.newBuilder().apply {
+                memberId = response.memberId
+            }.build()
+        }
+
+        fun of(request: Auth.RefreshRequest): AuthCommand.RefreshRequest {
+            return AuthCommand.RefreshRequest(request.refreshToken)
+        }
     }
 }

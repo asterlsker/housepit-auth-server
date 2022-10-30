@@ -28,10 +28,12 @@ class AuthGrpcHandler(
     }
 
     override suspend fun decode(request: Auth.DecodeRequest): Auth.DecodeResponse {
-        return super.decode(request)
+        val response = authFacade.decode(AuthMapper.of(request))
+        return AuthMapper.of(response)
     }
 
     override suspend fun refresh(request: Auth.RefreshRequest): Auth.RefreshResponse {
+        authFacade.refresh(AuthMapper.of(request))
         return super.refresh(request)
     }
 }

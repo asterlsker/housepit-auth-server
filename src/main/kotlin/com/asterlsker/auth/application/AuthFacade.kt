@@ -24,4 +24,14 @@ class AuthFacade(
     suspend fun link(request: AuthCommand.LinkRequest) {
         authService.link(request)
     }
+
+    @Transactional
+    suspend fun decode(request: AuthCommand.DecodeRequest): AuthCommand.DecodeResponse {
+        return authService.decode(request)
+    }
+
+    @Transactional
+    suspend fun refresh(request: AuthCommand.RefreshRequest): AuthCommand.RefreshResponse {
+        return authService.refresh(request)
+    }
 }
