@@ -27,7 +27,7 @@ repositories {
 
 dependencies {
     // starter
-    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.data:spring-data-r2dbc")
@@ -47,7 +47,7 @@ dependencies {
 
     // Google
     implementation("com.google.guava:guava:31.1-jre")
-//    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
+    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
 
     // apache
     implementation("org.apache.commons:commons-lang3")
@@ -58,8 +58,7 @@ dependencies {
     // GRPC
     implementation("io.grpc:grpc-protobuf:$grpcProtoVersion") // protobuf 로 만들어지는 서버 입장의 파일에서 필요한 메서드 등을 포함하고 있는 의존성
     implementation("io.grpc:grpc-kotlin-stub:1.2.0")
-    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
-    implementation("io.grpc:grpc-netty-shaded:$grpcProtoVersion")
+    compileOnly("org.apache.tomcat:annotations-api:6.0.53")
     implementation("com.google.protobuf:protobuf-kotlin:$grpcVersion") // protocol buffer 를 kotlin 파일로 컴파일하는데 사용되는 의존성
 
     // jwt
