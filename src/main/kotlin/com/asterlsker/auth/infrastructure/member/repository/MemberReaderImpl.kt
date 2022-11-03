@@ -5,6 +5,8 @@ import com.asterlsker.auth.common.response.ErrorCode
 import com.asterlsker.auth.domain.member.Member
 import com.asterlsker.auth.domain.member.MemberReader
 import com.asterlsker.auth.domain.model.Email
+import com.asterlsker.auth.domain.model.Phone
+import com.asterlsker.auth.infrastructure.member.entity.MemberEntity
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -18,7 +20,8 @@ class MemberReaderImpl(
     }
 
     override fun findByEmail(email: Email): Member? {
-        val memberEntity = memberRepository.findByEmail(email)
-        return memberEntity.block()?.toDomain()
+        // TODO 리팩토링 필요함
+        val memberEntity = MemberEntity(id = "abc", userName = "Jungho", phone = Phone("01089241810"))
+        return memberEntity.toDomain()
     }
 }

@@ -47,7 +47,7 @@ dependencies {
 
     // Google
     implementation("com.google.guava:guava:31.1-jre")
-    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
+//    implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
 
     // apache
     implementation("org.apache.commons:commons-lang3")
@@ -64,6 +64,9 @@ dependencies {
 
     // jwt
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+
+    // macos
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -99,7 +102,9 @@ sourceSets {
         java {
             srcDirs(
                 "build/generated/source/proto/main/java",
-                "build/generated/source/proto/main/kotlin"
+                "build/generated/source/proto/main/kotlin",
+                "build/generated/source/proto/main/grpc",
+                "build/generated/source/proto/main/grpckt",
             )
         }
     }

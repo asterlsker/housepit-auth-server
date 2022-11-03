@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.data.r2dbc.config.EnableR2dbcAuditing
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 
 
 @Configuration
+@EnableR2dbcRepositories(basePackages = ["com.asterlsker.auth.infrastructure.*.repository"])
 @EnableR2dbcAuditing
 class R2dbcConfig: AbstractR2dbcConfiguration() {
 

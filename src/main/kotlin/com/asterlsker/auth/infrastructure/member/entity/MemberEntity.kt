@@ -19,10 +19,10 @@ class MemberEntity(
     val phone: Phone,
 
     @Transient
-    val memberRoles: List<MemberRoleEntity>,
+    val memberRoles: List<MemberRoleEntity> = listOf(),
 
     @Transient
-    val memberSocialLogins: List<MemberSocialLoginEntity>,
+    val memberSocialLogins: List<MemberSocialLoginEntity> = listOf(),
 ): BaseEntity() {
 
     fun toDomain(): Member {

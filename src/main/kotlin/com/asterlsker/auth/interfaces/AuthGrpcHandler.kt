@@ -1,6 +1,5 @@
 package com.asterlsker.auth.interfaces
 
-import AuthServiceGrpcKt
 import com.asterlsker.auth.application.AuthFacade
 import com.asterlsker.auth.interfaces.mapper.AuthMapper
 import com.google.protobuf.Empty

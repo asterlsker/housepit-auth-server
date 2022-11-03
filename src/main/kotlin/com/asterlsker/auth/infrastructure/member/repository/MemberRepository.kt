@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono
 
 interface MemberRepository: ReactiveCrudRepository<MemberEntity, String> {
     // TODO @Query 작성 필요 (email property 못 읽는 듯)
-    fun findByEmail(@Param("email") email: Email): Mono<MemberEntity>
+//    fun findByEmail(@Param("email") email: Email): Mono<MemberEntity>
 }

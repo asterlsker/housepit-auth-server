@@ -1,18 +1,11 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-        default_batch_fetch_size: 1000
-
 security:
   jwt:
     token:
       secret-key: housepit#12%^!!Tzc@8924
       access-token-expire-time: 5 # 5min
       refresh-token-expire-time: 43200 # 1mo
-
-
+grpc:
+  server:
+    port: 12345
+server:
+  port: 8081
