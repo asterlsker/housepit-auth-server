@@ -3,40 +3,8 @@ package com.asterlsker.auth.interfaces
 import com.asterlsker.auth.application.AuthFacade
 import com.asterlsker.auth.interfaces.mapper.AuthMapper
 import com.google.protobuf.Empty
-import io.grpc.Server
-import io.grpc.ServerBuilder
 import net.devh.boot.grpc.server.service.GrpcService
 import org.springframework.beans.factory.annotation.Autowired
-
-class AuthGrpcServer(
-    private val port: String
-) {
-
-    private val authGrpcHandler = AuthGrpService()
-
-    private val server: Server = ServerBuilder
-        .forPort(port.toInt())
-        .addService(authGrpcHandler)
-        .build()
-
-    fun start() {
-        server.start()
-        println("Server started, listening on $port")
-        Runtime.getRuntime().addShutdownHook(
-            Thread {
-                this@AuthGrpcServer.stop()
-                println("# auth-server has been shut down !")
-            }
-        )
-    }
-
-    private fun stop() {
-        server.shutdown()
-    }
-    fun blockUntilShutdown() {
-        server.awaitTermination()
-    }
-}
 
 @GrpcService
 class AuthGrpService: AuthServiceGrpcKt.AuthServiceCoroutineImplBase() {
