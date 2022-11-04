@@ -3,14 +3,14 @@ package com.asterlsker.auth.domain.model
 import com.asterlsker.auth.common.exception.domain.InvalidEmailException
 
 class Email(
-    val email: String
+    val value: String
 ) {
 
     companion object {
-        const val EMAIL_PATTERN = "^[a-zA-Z0-9_!#\$%&'\\*+/=?{|}~^.-]+@[a-zA-Z0-9.-]+\$"
+        const val EMAIL_PATTERN = "^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9._-]+\$"
     }
 
     init {
-        if (email.matches(Regex(EMAIL_PATTERN))) throw InvalidEmailException()
+        if (!value.matches(Regex(EMAIL_PATTERN))) throw InvalidEmailException()
     }
 }

@@ -15,7 +15,7 @@ class MemberSocialLogin(
         return MemberSocialLoginEntity(
             id = this.id,
             provider = this.provider,
-            email = this.email
+            email = this.email.value
         )
     }
 }

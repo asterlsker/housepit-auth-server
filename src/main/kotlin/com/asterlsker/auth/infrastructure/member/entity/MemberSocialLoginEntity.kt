@@ -14,14 +14,14 @@ class MemberSocialLoginEntity(
 
     val provider: Provider,
 
-    val email: Email,
+    val email: String,
 ): BaseEntity() {
 
     fun toDomain(): MemberSocialLogin {
         return MemberSocialLogin(
             id = this.id,
             provider = this.provider,
-            email = this.email
+            email = Email(this.email)
         )
     }
 }

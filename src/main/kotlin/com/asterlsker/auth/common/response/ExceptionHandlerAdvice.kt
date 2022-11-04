@@ -47,6 +47,7 @@ class ExceptionHandlerAdvice {
             .body(CommonResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR))
     }
 
+    // TODO 중복 코드 제거 필요 (GrpcExceptionHandlerAdvice)
     private fun printLog(errorCode: ErrorCode, stackTrace: String) {
         val messageTemplate = "ErrorCode: ${errorCode.code}, Message: ${errorCode.message} StackTrace:$stackTrace"
         when (errorCode.logLevel) {

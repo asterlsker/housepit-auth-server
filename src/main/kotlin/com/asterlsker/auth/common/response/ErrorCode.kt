@@ -1,5 +1,6 @@
 package com.asterlsker.auth.common.response
 
+import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.event.Level
 import org.springframework.http.HttpStatus
 
@@ -35,4 +36,6 @@ enum class ErrorCode(
     VALIDATION(HttpStatus.BAD_REQUEST, "H1003", "Validation Error"),
     ENTITY(HttpStatus.BAD_REQUEST, "H1004", "Entity Error"),
     ;
+
+    fun getMsgWithStackTrace(e: Throwable) = "ErrorCode: ${this.code}, Message: ${this.message}, StackTrace: ${ExceptionUtils.getStackTrace(e)}"
 }
