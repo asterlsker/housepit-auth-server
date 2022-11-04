@@ -63,6 +63,7 @@ dependencies {
 
     // jwt
     implementation("io.jsonwebtoken:jjwt:0.9.1")
+    implementation("org.glassfish.jaxb:jaxb-runtime:4.0.1")
 
     // macos
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.79.Final:osx-aarch_64")
