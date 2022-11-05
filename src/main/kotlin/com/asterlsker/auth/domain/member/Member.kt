@@ -13,9 +13,9 @@ class Member(
 
     val phone: Phone,
 
-    val memberRoles: MutableList<MemberRole>,
+    val memberRoles: MutableList<MemberRole> = mutableListOf(),
 
-    val memberSocialLogins: MutableList<MemberSocialLogin>,
+    val memberSocialLogins: MutableList<MemberSocialLogin> = mutableListOf(),
 ) {
     fun link(provider: Provider, email: Email) {
         this.memberRoles.add(MemberRole(role = Role.USER))
