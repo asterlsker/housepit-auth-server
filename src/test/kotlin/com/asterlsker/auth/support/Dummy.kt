@@ -17,5 +17,6 @@ class MemberDummy {
     ) {
         fun signInRequest() = AuthCommand.SignInRequest(oAuthToken = this.oAuthToken, provider = this.provider)
         fun tokenResponse() = TokenResponse("ak", "rk")
+        fun toMember() = Member(id = "abc", userName = this.userName, phone = Phone(this.phone))
     }
 }
