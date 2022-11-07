@@ -6,6 +6,7 @@ import com.asterlsker.housepit.grpc.DecodeRequest
 import com.asterlsker.housepit.grpc.DecodeResponse
 import com.asterlsker.housepit.grpc.LinkRequest
 import com.asterlsker.housepit.grpc.RefreshRequest
+import com.asterlsker.housepit.grpc.RefreshResponse
 import com.asterlsker.housepit.grpc.SignInRequest
 import com.asterlsker.housepit.grpc.SignInResponse
 import com.asterlsker.housepit.grpc.SignInStatus
@@ -54,6 +55,13 @@ class AuthMapper {
 
         fun of(request: RefreshRequest): AuthCommand.RefreshRequest {
             return AuthCommand.RefreshRequest(request.refreshToken)
+        }
+
+        fun of(response: AuthCommand.RefreshResponse): RefreshResponse {
+            return RefreshResponse.newBuilder().apply {
+                accessToken = response.accessToken
+                refreshToken = response.refreshToken
+            }.build()
         }
     }
 }

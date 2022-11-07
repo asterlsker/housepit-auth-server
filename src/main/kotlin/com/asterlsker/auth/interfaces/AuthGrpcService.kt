@@ -33,7 +33,7 @@ class AuthGrpService: AuthServiceGrpcKt.AuthServiceCoroutineImplBase() {
 
     override suspend fun link(request: LinkRequest): Empty {
         authFacade.link(AuthMapper.of(request))
-        return super.link(request)
+        return Empty.getDefaultInstance()
     }
 
     override suspend fun decode(request: DecodeRequest): DecodeResponse {
@@ -42,7 +42,7 @@ class AuthGrpService: AuthServiceGrpcKt.AuthServiceCoroutineImplBase() {
     }
 
     override suspend fun refresh(request: RefreshRequest): RefreshResponse {
-        authFacade.refresh(AuthMapper.of(request))
-        return super.refresh(request)
+        val response = authFacade.refresh(AuthMapper.of(request))
+        return AuthMapper.of(response)
     }
 }

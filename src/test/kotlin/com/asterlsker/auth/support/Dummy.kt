@@ -16,6 +16,7 @@ class MemberDummy {
         val phone: String = "01089241810"
     ) {
         fun signInRequest() = AuthCommand.SignInRequest(oAuthToken = this.oAuthToken, provider = this.provider)
+        fun signOutRequest() = AuthCommand.SignOutRequest("ak")
         fun tokenResponse() = TokenResponse("ak", "rk")
         fun toMember() = Member(id = "abc", userName = this.userName, phone = Phone(this.phone))
     }

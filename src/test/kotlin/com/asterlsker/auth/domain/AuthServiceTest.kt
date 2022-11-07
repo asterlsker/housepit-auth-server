@@ -1,12 +1,12 @@
 package com.asterlsker.auth.domain
 
+import com.asterlsker.auth.common.exception.domain.InvalidTokenException
 import com.asterlsker.auth.domain.authorization.AuthService
 import com.asterlsker.auth.domain.authorization.token.JwtDecoder
 import com.asterlsker.auth.domain.authorization.token.JwtProvider
 import com.asterlsker.auth.domain.authorization.token.TokenIssueSpec
 import com.asterlsker.auth.domain.member.MemberReader
 import com.asterlsker.auth.domain.member.MemberStore
-import com.asterlsker.auth.domain.model.Email
 import com.asterlsker.auth.support.MemberDummy.GoogleUser
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.TestCase
@@ -17,6 +17,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
@@ -52,6 +53,20 @@ internal class AuthServiceTest: DescribeSpec() {
 
                 assertThat(result.accessToken).isNotBlank
                 assertThat(result.refreshToken).isNotBlank
+            }
+        }
+
+        describe("signOut") {
+            it("If accessToken is expired or invalid then throw Exception") {
+                every { jwtProvider.validateToken(any()) } answers { false }
+                assertThrows<InvalidTokenException> { authService.signOut(googleUser.signOutRequest()) }
+            }
+        }
+
+        describe("link") {
+            it("If accessToken is expired or invalid then throw Exception") {
+                every { jwtProvider.validateToken(any()) } answers { false }
+                assertThrows<InvalidTokenException> { authService.signOut(googleUser.signOutRequest()) }
             }
         }
     }
