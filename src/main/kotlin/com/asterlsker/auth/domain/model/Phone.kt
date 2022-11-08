@@ -5,7 +5,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.google.i18n.phonenumbers.Phonenumber
 
 class Phone(
-    val phone: String
+    val value: String
 ) {
 //    private val phoneNumber: Phonenumber.PhoneNumber
 //    private val phoneNumberUtil = PhoneNumberUtil.getInstance()
