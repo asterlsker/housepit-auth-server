@@ -1,6 +1,7 @@
 package com.asterlsker.auth.support
 
 import com.asterlsker.auth.domain.authorization.AuthCommand
+import com.asterlsker.auth.domain.authorization.token.TokenIssueSpec
 import com.asterlsker.auth.domain.authorization.token.TokenResponse
 import com.asterlsker.auth.domain.member.Member
 import com.asterlsker.auth.domain.model.Phone
@@ -19,5 +20,6 @@ class MemberDummy {
         fun signOutRequest() = AuthCommand.SignOutRequest("ak")
         fun tokenResponse() = TokenResponse("ak", "rk")
         fun toMember() = Member(id = "abc", userName = this.userName, phone = Phone(this.phone))
+        fun getTokenIssueSpec() = TokenIssueSpec(email = this.email, provider = this.provider)
     }
 }

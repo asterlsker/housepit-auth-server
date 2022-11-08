@@ -33,6 +33,13 @@ internal class AuthServiceTest: DescribeSpec() {
         val googleUser = GoogleUser()
     }
 
+    override fun beforeEach(testCase: TestCase) {
+        MockKAnnotations.init(this, relaxUnitFun = true)
+
+        every { jwtDecoder.decodeBase64(googleUser.oAuthToken, googleUser.provider) } returns googleUser.email
+        every { jwtProvider.issueTokens(TokenIssueSpec(googleUser.email, googleUser.provider)) } returns googleUser.tokenResponse()
+    }
+
     init {
         describe("signIn") {
             it("If exists email then return tokens") {
@@ -69,12 +76,5 @@ internal class AuthServiceTest: DescribeSpec() {
                 assertThrows<InvalidTokenException> { authService.signOut(googleUser.signOutRequest()) }
             }
         }
-    }
-
-    override fun beforeEach(testCase: TestCase) {
-        MockKAnnotations.init(this, relaxUnitFun = true)
-
-        every { jwtDecoder.decodeBase64(googleUser.oAuthToken, googleUser.provider) } returns googleUser.email
-        every { jwtProvider.issueTokens(TokenIssueSpec(googleUser.email, googleUser.provider)) } returns googleUser.tokenResponse()
     }
 }
