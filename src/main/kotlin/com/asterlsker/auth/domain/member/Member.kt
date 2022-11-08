@@ -6,7 +6,7 @@ import com.asterlsker.auth.domain.model.Provider
 import com.asterlsker.auth.domain.model.Role
 import com.asterlsker.auth.infrastructure.member.entity.MemberEntity
 
-class Member(
+data class Member(
     val id: String? = null,
 
     val userName: String,
@@ -24,15 +24,5 @@ class Member(
     fun link(provider: Provider, email: Email) {
         this.memberRoles.add(MemberRole(role = Role.USER))
         this.memberSocialLogins.add(MemberSocialLogin(provider = provider, email = email))
-    }
-
-    fun toEntity(): MemberEntity {
-        return MemberEntity(
-            id = this.id,
-            userName = this.userName,
-            phone = this.phone,
-            memberRoles = this.memberRoles.map { it.toEntity() },
-            memberSocialLogins = this.memberSocialLogins.map { it.toEntity() }
-        )
     }
 }
