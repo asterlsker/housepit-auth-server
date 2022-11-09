@@ -4,7 +4,7 @@ import com.asterlsker.auth.domain.model.Email
 
 interface MemberReader {
 
-    fun existsByEmail(email: Email): Boolean
+    suspend fun existsByEmail(email: Email): Boolean
 
-    fun findByEmail(email: Email): Member?
+    suspend fun findByEmail(email: Email): Member?
 }

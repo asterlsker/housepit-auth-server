@@ -74,7 +74,7 @@ class AuthService(
     }
 
     // TODO 추후에는 파라미터로 디코드 결과를 담은 객체를 받으면 됨
-    private fun validEmailAndRegisterMember(email: Email, provider: Provider) {
+    private suspend fun validEmailAndRegisterMember(email: Email, provider: Provider) {
         if (!memberReader.existsByEmail(email)) {
             val member = Member(userName = "jungHo", phone = Phone("01089241810"))
             val memberSocialLogin = MemberSocialLogin(provider = provider, email = email)

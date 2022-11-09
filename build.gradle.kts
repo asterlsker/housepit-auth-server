@@ -53,6 +53,7 @@ dependencies {
 
     // reactive
     implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-hibernate-reactive:$jdslVersion")
+    implementation("org.springframework.data:spring-data-commons")
     implementation("org.hibernate.reactive:hibernate-reactive-core:1.1.9.Final")
     implementation("io.smallrye.reactive:mutiny-kotlin:1.7.0")
 
