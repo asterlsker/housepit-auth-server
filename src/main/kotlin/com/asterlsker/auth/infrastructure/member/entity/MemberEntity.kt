@@ -27,11 +27,9 @@ class MemberEntity(
     @Column(name = "phone")
     val phone: String,
 
-    @JoinColumn(name = "member_id")
     @OneToMany(mappedBy = "member")
     val memberRoles: MutableList<MemberRoleEntity> = mutableListOf(),
 
-    @JoinColumn(name = "member_id")
     @OneToMany(mappedBy = "member")
     val memberSocialLogins: MutableList<MemberSocialLoginEntity> = mutableListOf(),
 ): BaseEntity() {

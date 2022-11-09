@@ -38,11 +38,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
-    // just add these dependencies for use kotlin-jdsl
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    val jdslVersion = "2.0.4.RELEASE"
-    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:$jdslVersion")
-
     // h2 Database reactive
     implementation("com.h2database:h2")
     implementation("io.agroal:agroal-pool:2.0")
@@ -50,6 +45,11 @@ dependencies {
 
     // redis
     implementation("org.redisson:redisson:3.17.6")
+
+    // just add these dependencies for use kotlin-jdsl
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    val jdslVersion = "2.0.4.RELEASE"
+    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:$jdslVersion")
 
     // reactive
     implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-hibernate-reactive:$jdslVersion")

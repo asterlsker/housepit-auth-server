@@ -4,6 +4,7 @@ import com.asterlsker.auth.domain.member.MemberSocialLogin
 import com.asterlsker.auth.infrastructure.BaseEntity
 import com.asterlsker.auth.domain.model.Email
 import com.asterlsker.auth.domain.model.Provider
+import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
 
+@Entity
 @Table(name = "member_social_login")
 class MemberSocialLoginEntity(
     @Id

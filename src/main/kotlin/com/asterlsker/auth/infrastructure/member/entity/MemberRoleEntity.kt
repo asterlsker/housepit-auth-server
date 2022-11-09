@@ -1,6 +1,5 @@
 package com.asterlsker.auth.infrastructure.member.entity
 
-import com.asterlsker.auth.domain.member.Member
 import com.asterlsker.auth.domain.member.MemberRole
 import com.asterlsker.auth.domain.model.Role
 import com.asterlsker.auth.infrastructure.BaseEntity
