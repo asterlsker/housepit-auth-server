@@ -13,9 +13,8 @@ class MemberSocialLoginQueryRepositoryImpl(
 
     override suspend fun existsByEmail(email: String): Boolean {
         val result = queryFactory.listQuery<MemberSocialLoginEntity> {
-            val entity = entity(MemberSocialLoginEntity::class)
-            selectMulti(entity)
-            from(entity)
+            select(MemberSocialLoginEntity::class.java)
+            from(entity(MemberSocialLoginEntity::class))
             where(
                 column(MemberSocialLoginEntity::email).equal(email)
             )

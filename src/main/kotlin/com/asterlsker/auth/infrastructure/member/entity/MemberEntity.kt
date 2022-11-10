@@ -10,7 +10,6 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.JoinColumn
 import javax.persistence.OneToMany
 import javax.persistence.Table
 
@@ -19,7 +18,7 @@ import javax.persistence.Table
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: String? = null,
+    val id: Long? = null,
 
     @Column(name = "user_name")
     val userName: String,
@@ -37,7 +36,7 @@ class MemberEntity(
     companion object {
         fun of(member: Member): MemberEntity {
             val entity = MemberEntity(
-                id = member.id,
+                id = member.id?.toLong(),
                 userName = member.userName,
                 phone = member.phone.value,
             )
@@ -67,7 +66,7 @@ class MemberEntity(
 
     fun toDomain(): Member {
         return Member(
-            id = this.id,
+            id = this.id.toString(),
             userName = this.userName,
             phone = Phone(this.phone),
             memberRoles = this.memberRoles.map { it.toDomain() }.toMutableList(),
