@@ -5,6 +5,7 @@ import com.asterlsker.auth.domain.member.MemberRole
 import com.asterlsker.auth.domain.member.MemberSocialLogin
 import com.asterlsker.auth.domain.model.Phone
 import com.asterlsker.auth.infrastructure.BaseEntity
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -26,10 +27,10 @@ class MemberEntity(
     @Column(name = "phone")
     val phone: String,
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
     val memberRoles: MutableList<MemberRoleEntity> = mutableListOf(),
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
     val memberSocialLogins: MutableList<MemberSocialLoginEntity> = mutableListOf(),
 ): BaseEntity() {
 

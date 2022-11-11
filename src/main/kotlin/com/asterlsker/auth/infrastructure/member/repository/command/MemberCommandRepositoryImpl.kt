@@ -14,8 +14,6 @@ class MemberCommandRepositoryImpl(
         val entity = MemberEntity.of(member)
         queryFactory.transactionWithFactory { session, factory ->
             session.persist(entity).awaitSuspending()
-            session.persistAll(entity.memberSocialLogins.toTypedArray()).awaitSuspending()
-            session.persistAll(entity.memberRoles.toTypedArray()).awaitSuspending()
             session.flush().awaitSuspending()
         }
     }
