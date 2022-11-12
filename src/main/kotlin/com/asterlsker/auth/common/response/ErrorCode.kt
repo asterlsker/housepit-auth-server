@@ -32,6 +32,8 @@ enum class ErrorCode(
     NOT_DEFINED_OAUTH_TOKEN_DECODER(HttpStatus.BAD_REQUEST, "C1015", "Not Defined OAuth Token Decoder"),
     NOT_FOUND_OAUTH_TOKEN_DECODER(HttpStatus.BAD_REQUEST, "C1016", "Not Found OAuth Token Decoder"),
     INVALID_GOOGLE_OAUTH_TOKEN(HttpStatus.BAD_REQUEST, "C1017", "Invalid Google OAuth Token"),
+    MISSING_REQUIRED_PROPERTY_IN_GOOGLE_OAUTH_PAYLOAD(HttpStatus.BAD_REQUEST, "C1018", "Required Property is Missing in Payload"),
+    UN_VERIFIED_EMAIL(HttpStatus.BAD_REQUEST, "C1019", "UnVerified Email"),
 
     // Hierarchy
     DOMAIN(HttpStatus.BAD_REQUEST, "H1001", "Domain Layer Error"),

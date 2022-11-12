@@ -12,7 +12,6 @@ import com.asterlsker.auth.domain.member.MemberReader
 import com.asterlsker.auth.domain.member.MemberSocialLogin
 import com.asterlsker.auth.domain.member.MemberStore
 import com.asterlsker.auth.domain.model.Email
-import com.asterlsker.auth.domain.model.Phone
 import com.asterlsker.auth.domain.model.Provider
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -29,7 +28,7 @@ class AuthService(
     suspend fun signIn(request: AuthCommand.SignInRequest): AuthCommand.SignInResponse {
         val tokenDecoder = OAuthTokenDecoderFactory.of(tokenDecoders, request.provider)
         val userDetails = tokenDecoder.decode(token = request.oAuthToken)
-        validEmailAndRegisterMember(email = Email(userDetails.email), provider = request.provider)
+        validEmailAndRegisterMember(email = userDetails.email, provider = request.provider)
         val tokens = jwtProvider.issueTokens(TokenIssueSpec(email = userDetails.email, provider = request.provider))
 
         return AuthCommand.SignInResponse(accessToken = tokens.accessToken, refreshToken = tokens.refreshToken)
@@ -45,24 +44,16 @@ class AuthService(
 
     @Transactional
     suspend fun link(request: AuthCommand.LinkRequest) {
-        // 연동하려는 이메일이 이미 연동되어있는 이메일인지 검증
-        val tokenDecoder = OAuthTokenDecoderFactory.of(tokenDecoders, request.provider)
-        val userDetails = tokenDecoder.decode(request.oAuthToken)
-        val validEmail = Email(userDetails.email)
-        if (memberReader.existsByEmail(validEmail)) throw ExistMemberException()
-
-        // 현재 로그인되어있는 email 로 회원 조회
-        val payload = jwtProvider.getPayload(request.accessToken)
-        val member = memberReader.findByEmail(Email(payload.email)) ?: throw NotExistMemberException()
-
-        member.link(provider = request.provider, email = validEmail)
+        val newEmail = checkIsAlreadyLinked(request)
+        val member = getRegisteredMember(request.accessToken)
+        member.link(provider = request.provider, email = Email(newEmail))
         memberStore.save(member)
     }
 
     @Transactional
     suspend fun decode(request: AuthCommand.DecodeRequest): AuthCommand.DecodeResponse {
         val payload = jwtProvider.getPayload(request.accessToken)
-        val member = memberReader.findByEmail(Email(payload.email)) ?: throw NotExistMemberException()
+        val member = memberReader.findByEmail(payload.email) ?: throw NotExistMemberException()
         return member.id!!.let { AuthCommand.DecodeResponse(it) }
     }
 
@@ -75,13 +66,27 @@ class AuthService(
         )
     }
 
-    // TODO 추후에는 파라미터로 디코드 결과를 담은 객체를 받으면 됨
-    private suspend fun validEmailAndRegisterMember(email: Email, provider: Provider) {
+    private suspend fun validEmailAndRegisterMember(email: String, provider: Provider) {
         if (!memberReader.existsByEmail(email)) {
-            val member = Member(userName = "jungHo", phone = Phone("01089241810"))
-            val memberSocialLogin = MemberSocialLogin(provider = provider, email = email)
-            member.register(memberSocialLogin)
+            val validEmail = Email(email)
+            val member = Member.new(validEmail)
+            member.register(MemberSocialLogin(provider = provider, email = validEmail))
             memberStore.save(member)
         }
+    }
+
+    /**
+     * 연동하려는 이메일이 이미 등록 되어있는지 검증하고 새로 등록하려는 이메일을 반환
+     */
+    private suspend fun checkIsAlreadyLinked(request: AuthCommand.LinkRequest): String {
+        val tokenDecoder = OAuthTokenDecoderFactory.of(tokenDecoders, request.provider)
+        val userDetails = tokenDecoder.decode(request.oAuthToken)
+        if (memberReader.existsByEmail(userDetails.email)) throw ExistMemberException()
+        return userDetails.email
+    }
+
+    private suspend fun getRegisteredMember(accessToken: String): Member {
+        val payload = jwtProvider.getPayload(accessToken)
+        return memberReader.findByEmail(payload.email) ?: throw NotExistMemberException()
     }
 }

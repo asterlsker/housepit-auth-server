@@ -13,12 +13,12 @@ class MemberReaderImpl(
     private val memberSocialLoginRepository: MemberSocialLoginQueryRepository
 ): MemberReader {
 
-    override suspend fun existsByEmail(email: Email): Boolean {
-        return memberSocialLoginRepository.existsByEmail(email.value)
+    override suspend fun existsByEmail(email: String): Boolean {
+        return memberSocialLoginRepository.existsByEmail(email)
     }
 
-    override suspend fun findByEmail(email: Email): Member? {
-        val result = memberRepository.findByEmail(email.value)
+    override suspend fun findByEmail(email: String): Member? {
+        val result = memberRepository.findByEmail(email)
         return result?.toDomain()
     }
 }

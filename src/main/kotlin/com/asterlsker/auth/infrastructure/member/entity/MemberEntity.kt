@@ -22,7 +22,7 @@ class MemberEntity(
     val id: Long? = null,
 
     @Column(name = "user_name")
-    val userName: String,
+    val userName: String? = null,
 
     @Column(name = "phone")
     val phone: String? = null,
