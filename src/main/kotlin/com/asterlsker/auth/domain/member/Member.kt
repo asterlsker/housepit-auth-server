@@ -4,6 +4,7 @@ import com.asterlsker.auth.domain.model.Email
 import com.asterlsker.auth.domain.model.Phone
 import com.asterlsker.auth.domain.model.Provider
 import com.asterlsker.auth.domain.model.Role
+import org.apache.commons.lang3.RandomStringUtils
 
 data class Member(
     val id: String? = null,
@@ -28,6 +29,10 @@ data class Member(
     }
 
     companion object {
-        fun new() = Member()
+        fun new(email: Email) = Member(userName = createUserName(email))
+        private fun createUserName(email: Email): String {
+            val number = RandomStringUtils.random(4, false, true)
+            return "${email.id}#${number}"
+        }
     }
 }

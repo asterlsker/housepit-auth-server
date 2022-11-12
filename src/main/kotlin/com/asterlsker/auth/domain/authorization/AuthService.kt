@@ -29,7 +29,7 @@ class AuthService(
     suspend fun signIn(request: AuthCommand.SignInRequest): AuthCommand.SignInResponse {
         val tokenDecoder = OAuthTokenDecoderFactory.of(tokenDecoders, request.provider)
         val userDetails = tokenDecoder.decode(token = request.oAuthToken)
-        validEmailAndRegisterMember(email = Email(userDetails.email), provider = request.provider)
+        validEmailAndRegisterMember(email = userDetails.email, provider = request.provider)
         val tokens = jwtProvider.issueTokens(TokenIssueSpec(email = userDetails.email, provider = request.provider))
 
         return AuthCommand.SignInResponse(accessToken = tokens.accessToken, refreshToken = tokens.refreshToken)
@@ -75,11 +75,11 @@ class AuthService(
         )
     }
 
-    private suspend fun validEmailAndRegisterMember(email: Email, provider: Provider) {
-        if (!memberReader.existsByEmail(email)) {
-            val member = Member.new()
-            val memberSocialLogin = MemberSocialLogin(provider = provider, email = email)
-            member.register(memberSocialLogin)
+    private suspend fun validEmailAndRegisterMember(email: String, provider: Provider) {
+        val validEmail = Email(email)
+        if (!memberReader.existsByEmail(validEmail)) {
+            val member = Member.new(validEmail)
+            member.register(MemberSocialLogin(provider = provider, email = validEmail))
             memberStore.save(member)
         }
     }
