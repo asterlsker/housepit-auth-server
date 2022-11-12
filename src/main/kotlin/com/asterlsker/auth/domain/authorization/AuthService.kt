@@ -75,10 +75,9 @@ class AuthService(
         )
     }
 
-    // TODO 추후에는 파라미터로 디코드 결과를 담은 객체를 받으면 됨
     private suspend fun validEmailAndRegisterMember(email: Email, provider: Provider) {
         if (!memberReader.existsByEmail(email)) {
-            val member = Member(userName = "jungHo", phone = Phone("01089241810"))
+            val member = Member.new()
             val memberSocialLogin = MemberSocialLogin(provider = provider, email = email)
             member.register(memberSocialLogin)
             memberStore.save(member)

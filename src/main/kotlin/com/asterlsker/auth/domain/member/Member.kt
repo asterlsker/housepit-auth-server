@@ -8,9 +8,10 @@ import com.asterlsker.auth.domain.model.Role
 data class Member(
     val id: String? = null,
 
-    val userName: String,
+    // TODO signIn 시, 임시 닉네임 할당 로직 필요
+    val userName: String? = null,
 
-    val phone: Phone?,
+    val phone: Phone? = null,
 
     val memberRoles: MutableList<MemberRole> = mutableListOf(),
 
@@ -24,5 +25,9 @@ data class Member(
     fun link(provider: Provider, email: Email) {
         this.memberRoles.add(MemberRole(role = Role.USER))
         this.memberSocialLogins.add(MemberSocialLogin(provider = provider, email = email))
+    }
+
+    companion object {
+        fun new() = Member()
     }
 }
