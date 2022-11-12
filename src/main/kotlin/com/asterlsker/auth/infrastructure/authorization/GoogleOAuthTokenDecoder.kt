@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.*
 
-@Component("google${OAuthTokenDecoder.BEAN_NAME_SUFFIX}")
+@Component("${OAuthTokenDecoder.GOOGLE}${OAuthTokenDecoder.BEAN_NAME_SUFFIX}")
 class GoogleOAuthTokenDecoder(
     private val googleOAuthProperties: GoogleOAuthProperties,
 ): OAuthTokenDecoder {
@@ -36,8 +36,7 @@ class GoogleOAuthTokenDecoder(
         val payload = verifiedToken.payload
         if (!payload.emailVerified) throw UnVerifiedGoogleOAuthEmailException()
         val email = payload.email ?: throw GoogleOAuthPayloadException()
-        val name = payload["name"] as String?
 
-        return UserDetails(name = name, email = email)
+        return UserDetails(email)
     }
 }

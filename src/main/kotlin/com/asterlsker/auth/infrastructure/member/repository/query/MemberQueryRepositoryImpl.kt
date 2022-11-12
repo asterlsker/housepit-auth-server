@@ -1,6 +1,5 @@
 package com.asterlsker.auth.infrastructure.member.repository.query
 
-import com.asterlsker.auth.domain.member.Member
 import com.asterlsker.auth.infrastructure.member.entity.MemberEntity
 import com.asterlsker.auth.infrastructure.member.entity.MemberSocialLoginEntity
 import com.linecorp.kotlinjdsl.querydsl.expression.column

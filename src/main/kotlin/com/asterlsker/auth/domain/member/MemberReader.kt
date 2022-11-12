@@ -1,10 +1,8 @@
 package com.asterlsker.auth.domain.member
 
-import com.asterlsker.auth.domain.model.Email
-
 interface MemberReader {
 
-    suspend fun existsByEmail(email: Email): Boolean
+    suspend fun existsByEmail(email: String): Boolean
 
-    suspend fun findByEmail(email: Email): Member?
+    suspend fun findByEmail(email: String): Member?
 }
