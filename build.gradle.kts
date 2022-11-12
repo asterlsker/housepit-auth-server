@@ -67,6 +67,7 @@ dependencies {
     // Google
     implementation("com.google.guava:guava:31.1-jre")
     implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
+    implementation("com.google.api-client:google-api-client:1.32.1")
 
     // apache
     implementation("org.apache.commons:commons-lang3")

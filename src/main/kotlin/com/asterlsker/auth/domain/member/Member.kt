@@ -10,7 +10,7 @@ data class Member(
 
     val userName: String,
 
-    val phone: Phone,
+    val phone: Phone?,
 
     val memberRoles: MutableList<MemberRole> = mutableListOf(),
 

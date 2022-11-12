@@ -25,7 +25,7 @@ class MemberEntity(
     val userName: String,
 
     @Column(name = "phone")
-    val phone: String,
+    val phone: String? = null,
 
     @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
     val memberRoles: MutableList<MemberRoleEntity> = mutableListOf(),
@@ -39,7 +39,7 @@ class MemberEntity(
             val entity = MemberEntity(
                 id = member.id?.toLong(),
                 userName = member.userName,
-                phone = member.phone.value,
+                phone = member.phone?.value,
             )
 
             entity.addRoles(*member.memberRoles.toTypedArray())
@@ -69,7 +69,7 @@ class MemberEntity(
         return Member(
             id = this.id.toString(),
             userName = this.userName,
-            phone = Phone(this.phone),
+            phone = this.phone?.let { Phone(it) },
             memberRoles = this.memberRoles.map { it.toDomain() }.toMutableList(),
             memberSocialLogins = this.memberSocialLogins.map { it.toDomain() }.toMutableList()
         )
