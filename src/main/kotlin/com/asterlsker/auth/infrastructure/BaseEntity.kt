@@ -5,7 +5,11 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
 import java.time.ZonedDateTime
+import javax.persistence.EntityListeners
+import javax.persistence.MappedSuperclass
 
+@MappedSuperclass
+@EntityListeners
 abstract class BaseEntity {
     @CreatedDate
     var createdAt: ZonedDateTime = ZonedDateTime.now()

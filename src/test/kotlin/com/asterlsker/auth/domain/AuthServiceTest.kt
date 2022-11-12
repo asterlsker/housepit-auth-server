@@ -11,6 +11,8 @@ import com.asterlsker.auth.support.MemberDummy.GoogleUser
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.TestCase
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -43,18 +45,18 @@ internal class AuthServiceTest: DescribeSpec() {
     init {
         describe("signIn") {
             it("If exists email then return tokens") {
-                every { memberReader.existsByEmail(any()) } answers { true }
+                coEvery { memberReader.existsByEmail(any()) } answers { true }
 
                 val result = authService.signIn(googleUser.signInRequest())
 
                 assertThat(result.accessToken).isNotBlank
                 assertThat(result.refreshToken).isNotBlank
-                verify(exactly = 0) { memberStore.save(googleUser.toMember()) }
+                coVerify(exactly = 0) { memberStore.save(googleUser.toMember()) }
             }
 
             it("If not exists email then register user and return tokens") {
-                every { memberReader.existsByEmail(any()) } answers { false }
-                every { memberStore.save(any()) } answers { googleUser.toMember() }
+                coEvery { memberReader.existsByEmail(any()) } answers { false }
+                coEvery { memberStore.save(any()) } answers { googleUser.toMember() }
 
                 val result = authService.signIn(googleUser.signInRequest())
 

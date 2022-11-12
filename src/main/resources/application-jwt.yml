@@ -1,0 +1,6 @@
+security:
+  jwt:
+    token:
+      secret-key: housepit#123
+      access-token-expire-time: 5 # 5min
+      refresh-token-expire-time: 43200 # 1mo

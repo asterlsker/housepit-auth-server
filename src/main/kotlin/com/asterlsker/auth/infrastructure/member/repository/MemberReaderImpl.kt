@@ -1,28 +1,24 @@
 package com.asterlsker.auth.infrastructure.member.repository
 
-import com.asterlsker.auth.common.exception.EntityException
-import com.asterlsker.auth.common.response.ErrorCode
 import com.asterlsker.auth.domain.member.Member
 import com.asterlsker.auth.domain.member.MemberReader
 import com.asterlsker.auth.domain.model.Email
-import com.asterlsker.auth.domain.model.Phone
-import com.asterlsker.auth.infrastructure.member.entity.MemberEntity
+import com.asterlsker.auth.infrastructure.member.repository.query.MemberQueryRepository
+import com.asterlsker.auth.infrastructure.member.repository.query.MemberSocialLoginQueryRepository
 import org.springframework.stereotype.Repository
 
 @Repository
 class MemberReaderImpl(
-    private val memberRepository: MemberRepository,
-    private val memberSocialLoginRepository: MemberSocialLoginRepository
+    private val memberRepository: MemberQueryRepository,
+    private val memberSocialLoginRepository: MemberSocialLoginQueryRepository
 ): MemberReader {
 
-    override fun existsByEmail(email: Email): Boolean {
-        val result = memberSocialLoginRepository.existsByEmail(email.value)
-        return result.block() ?: throw EntityException(ErrorCode.ENTITY_NOT_FOUND)
+    override suspend fun existsByEmail(email: Email): Boolean {
+        return memberSocialLoginRepository.existsByEmail(email.value)
     }
 
-    override fun findByEmail(email: Email): Member? {
-        // TODO 리팩토링 필요함
+    override suspend fun findByEmail(email: Email): Member? {
         val result = memberRepository.findByEmail(email.value)
-        return result.block()?.toDomain()
+        return result?.toDomain()
     }
 }

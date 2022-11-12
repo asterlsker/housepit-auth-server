@@ -26,11 +26,16 @@ repositories {
 }
 
 dependencies {
+
+    allOpen{
+        annotation("javax.persistence.Entity")
+        annotation("javax.persistence.MappedSuperclass")
+        annotation("javax.persistence.Embeddable")
+    }
+
     // starter
-//    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.data:spring-data-r2dbc")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("net.devh:grpc-spring-boot-starter:2.13.1.RELEASE")
 
@@ -40,14 +45,29 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
-    // Database
-    runtimeOnly("com.h2database:h2")
-    implementation("io.r2dbc:r2dbc-h2")
+    // h2 Database reactive
+    implementation("com.h2database:h2")
+    implementation("io.agroal:agroal-pool:2.0")
+    implementation("io.vertx:vertx-jdbc-client:4.3.1")
+
+    // redis
     implementation("org.redisson:redisson:3.17.6")
+
+    // just add these dependencies for use kotlin-jdsl
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    val jdslVersion = "2.0.4.RELEASE"
+    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:$jdslVersion")
+
+    // reactive
+    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-hibernate-reactive:$jdslVersion")
+    implementation("org.springframework.data:spring-data-commons")
+    implementation("org.hibernate.reactive:hibernate-reactive-core:1.1.9.Final")
+    implementation("io.smallrye.reactive:mutiny-kotlin:1.7.0")
 
     // Google
     implementation("com.google.guava:guava:31.1-jre")
     implementation("com.googlecode.libphonenumber:libphonenumber:8.12.57")
+    implementation("com.google.api-client:google-api-client:1.32.1")
 
     // apache
     implementation("org.apache.commons:commons-lang3")

@@ -29,6 +29,9 @@ enum class ErrorCode(
     ENTITY_NOT_FOUND(HttpStatus.BAD_REQUEST, "C1012", "Entity Not Found"),
     ENTITY_SAVE(HttpStatus.BAD_REQUEST, "C1013", "Entity Save Error"),
     EXPIRED_TOKEN(HttpStatus.BAD_REQUEST, "C1014", "Expired Token"),
+    NOT_DEFINED_OAUTH_TOKEN_DECODER(HttpStatus.BAD_REQUEST, "C1015", "Not Defined OAuth Token Decoder"),
+    NOT_FOUND_OAUTH_TOKEN_DECODER(HttpStatus.BAD_REQUEST, "C1016", "Not Found OAuth Token Decoder"),
+    INVALID_GOOGLE_OAUTH_TOKEN(HttpStatus.BAD_REQUEST, "C1017", "Invalid Google OAuth Token"),
 
     // Hierarchy
     DOMAIN(HttpStatus.BAD_REQUEST, "H1001", "Domain Layer Error"),
