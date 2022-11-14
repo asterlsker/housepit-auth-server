@@ -29,8 +29,11 @@ class AuthService(
         val tokenDecoder = OAuthTokenDecoderFactory.of(tokenDecoders, request.provider)
         val userDetails = tokenDecoder.decode(token = request.oAuthToken)
         validEmailAndRegisterMember(email = userDetails.email, provider = request.provider)
+
+        // TODO TokenIssueSpec 에 member-id 도 넣어야 함
         val tokens = jwtProvider.issueTokens(TokenIssueSpec(email = userDetails.email, provider = request.provider))
 
+        // TODO TokenResponse 에 권한 넣기
         return AuthCommand.SignInResponse(accessToken = tokens.accessToken, refreshToken = tokens.refreshToken)
     }
 

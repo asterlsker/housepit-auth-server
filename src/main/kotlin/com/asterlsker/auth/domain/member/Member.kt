@@ -6,6 +6,7 @@ import com.asterlsker.auth.domain.model.Provider
 import com.asterlsker.auth.domain.model.Role
 import org.apache.commons.lang3.RandomStringUtils
 
+// TODO client 에서 사용할 unique 한 UUID 만들기
 data class Member(
     val id: String? = null,
 
