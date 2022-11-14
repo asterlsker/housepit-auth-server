@@ -11,10 +11,8 @@ import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.gson.GsonFactory
 import org.apache.commons.lang3.exception.ExceptionUtils
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 import java.util.*
 
-@Component("${OAuthTokenDecoder.GOOGLE}${OAuthTokenDecoder.BEAN_NAME_SUFFIX}")
 class GoogleOAuthTokenDecoder(
     private val googleOAuthProperties: GoogleOAuthProperties,
 ): OAuthTokenDecoder {
