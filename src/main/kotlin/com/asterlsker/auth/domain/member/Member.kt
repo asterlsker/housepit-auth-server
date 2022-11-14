@@ -9,7 +9,6 @@ import org.apache.commons.lang3.RandomStringUtils
 data class Member(
     val id: String? = null,
 
-    // TODO signIn 시, 임시 닉네임 할당 로직 필요
     val userName: String? = null,
 
     val phone: Phone? = null,
