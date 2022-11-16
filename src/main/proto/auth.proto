@@ -12,6 +12,9 @@ service AuthService {
   rpc SignOut(SignOutRequest) returns (google.protobuf.Empty){};
   rpc Decode(DecodeRequest) returns(DecodeResponse){};
   rpc Refresh(RefreshRequest) returns (RefreshResponse){};
+  rpc SaveCertification(SaveCertificationRequest) returns (google.protobuf.Empty){};
+  rpc UpdateMember(UpdateMemberRequest) returns (google.protobuf.Empty){};
+  rpc LookupMember(LookupMemberRequest) returns (LookupMemberResponse){};
 }
 // SignIn
 message SignInRequest {
@@ -22,6 +25,8 @@ message SignInResponse {
   SignInStatus status = 1;
   string access_token = 2;
   string refresh_token = 3;
+  string accessTokenExpiredAt = 4;
+  string refreshTokenExpiredAt = 5;
 }
 // Link
 message LinkRequest{
@@ -47,6 +52,29 @@ message RefreshRequest{
 message RefreshResponse{
   string access_token = 1;
   string refresh_token = 2;
+  string accessTokenExpiredAt = 3;
+  string refreshTokenExpiredAt = 4;
+}
+// Save Certification
+message SaveCertificationRequest {
+  string phone = 1;
+  string ci = 2;
+  string access_token = 3;
+}
+// Update Member
+message UpdateMemberRequest {
+  string user_name = 1;
+  string access_token = 2;
+}
+// Update Member
+message LookupMemberRequest {
+  string member_id = 1;
+  string access_token = 2;
+}
+// Lookup Member
+message LookupMemberResponse {
+  string member_id = 1;
+  string user_name = 2;
 }
 // Enums
 enum Provider {
