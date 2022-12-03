@@ -28,12 +28,17 @@ class AuthService(
     suspend fun signIn(request: AuthCommand.SignInRequest): AuthCommand.SignInResponse {
         val tokenDecoder = OAuthTokenDecoderFactory.of(tokenDecoders, request.provider)
         val userDetails = tokenDecoder.decode(token = request.oAuthToken)
-        validEmailAndRegisterMember(email = userDetails.email, provider = request.provider)
+        val member = validEmailAndRegisterMember(email = userDetails.email, provider = request.provider)
 
-        // TODO TokenIssueSpec 에 member-id 도 넣어야 함
-        val tokens = jwtProvider.issueTokens(TokenIssueSpec(email = userDetails.email, provider = request.provider))
+        val tokens = jwtProvider.issueTokens(
+            TokenIssueSpec(
+                memberUuid = member.memberUuid,
+                memberRoles = member.getRoles(),
+                email = userDetails.email,
+                provider = request.provider
+            )
+        )
 
-        // TODO TokenResponse 에 권한 넣기
         return AuthCommand.SignInResponse(accessToken = tokens.accessToken, refreshToken = tokens.refreshToken)
     }
 
@@ -78,13 +83,18 @@ class AuthService(
         return AuthCommand.LookupMemberResponse(memberUuid = result.memberUuid, userName = result.userName)
     }
 
-    private suspend fun validEmailAndRegisterMember(email: String, provider: Provider) {
-        if (!memberReader.existsByEmail(email)) {
+    private suspend fun validEmailAndRegisterMember(email: String, provider: Provider): Member {
+        val member = memberReader.findByEmail(email)
+
+        if (member == null) {
             val validEmail = Email(email)
-            val member = Member.new(validEmail)
-            member.register(MemberSocialLogin(provider = provider, email = validEmail))
-            memberStore.save(member)
+            val newMember = Member.new(validEmail)
+            newMember.register(MemberSocialLogin(provider = provider, email = validEmail))
+            memberStore.save(newMember)
+            return newMember
         }
+
+        return member
     }
 
     /**

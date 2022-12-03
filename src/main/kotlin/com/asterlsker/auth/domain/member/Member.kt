@@ -30,6 +30,8 @@ data class Member(
         this.memberSocialLogins.add(MemberSocialLogin(provider = provider, email = email))
     }
 
+    fun getRoles() = memberRoles.map { it.role }
+
     companion object {
         fun new(email: Email) = Member(userName = createUserName(email), memberUuid = createUuid())
 
