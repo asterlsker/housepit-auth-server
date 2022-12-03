@@ -19,7 +19,7 @@ class MemberDummy {
         fun signInRequest() = AuthCommand.SignInRequest(oAuthToken = this.oAuthToken, provider = this.provider)
         fun signOutRequest() = AuthCommand.SignOutRequest("ak")
         fun tokenResponse() = TokenResponse("ak", "rk")
-        fun toMember() = Member(id = "abc", userName = this.userName, phone = Phone(this.phone))
+        fun toMember() = Member(id = "abc", memberUuid = "test-uuid", userName = this.userName, phone = Phone(this.phone))
         fun getTokenIssueSpec() = TokenIssueSpec(email = this.email, provider = this.provider)
     }
 }

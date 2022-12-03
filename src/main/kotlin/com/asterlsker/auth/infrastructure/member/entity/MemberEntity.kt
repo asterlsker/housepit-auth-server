@@ -21,8 +21,11 @@ class MemberEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
+    @Column(name = "member_uuid")
+    val memberUuid: String,
+
     @Column(name = "user_name")
-    val userName: String? = null,
+    val userName: String,
 
     @Column(name = "phone")
     val phone: String? = null,
@@ -38,6 +41,7 @@ class MemberEntity(
         fun of(member: Member): MemberEntity {
             val entity = MemberEntity(
                 id = member.id?.toLong(),
+                memberUuid = member.memberUuid,
                 userName = member.userName,
                 phone = member.phone?.value,
             )
@@ -68,6 +72,7 @@ class MemberEntity(
     fun toDomain(): Member {
         return Member(
             id = this.id.toString(),
+            memberUuid = this.memberUuid,
             userName = this.userName,
             phone = this.phone?.let { Phone(it) },
             memberRoles = this.memberRoles.map { it.toDomain() }.toMutableList(),

@@ -5,6 +5,8 @@ import com.asterlsker.auth.domain.model.Provider
 import com.asterlsker.housepit.grpc.DecodeRequest
 import com.asterlsker.housepit.grpc.DecodeResponse
 import com.asterlsker.housepit.grpc.LinkRequest
+import com.asterlsker.housepit.grpc.LookupMemberRequest
+import com.asterlsker.housepit.grpc.LookupMemberResponse
 import com.asterlsker.housepit.grpc.RefreshRequest
 import com.asterlsker.housepit.grpc.RefreshResponse
 import com.asterlsker.housepit.grpc.SignInRequest
@@ -61,6 +63,20 @@ class AuthMapper {
             return RefreshResponse.newBuilder().apply {
                 accessToken = response.accessToken
                 refreshToken = response.refreshToken
+            }.build()
+        }
+
+        fun of(request: LookupMemberRequest): AuthCommand.LookupMemberRequest {
+            return AuthCommand.LookupMemberRequest(
+                memberUuid = request.memberId,
+                accessToken = request.accessToken
+            )
+        }
+
+        fun of(response: AuthCommand.LookupMemberResponse): LookupMemberResponse {
+            return LookupMemberResponse.newBuilder().apply {
+                memberId = response.memberUuid
+                userName = response.userName
             }.build()
         }
     }

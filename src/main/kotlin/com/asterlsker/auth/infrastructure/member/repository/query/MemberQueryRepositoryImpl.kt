@@ -21,4 +21,12 @@ class MemberQueryRepositoryImpl(
             where(column(MemberSocialLoginEntity::email).equal(email))
         }
     }
+
+    override suspend fun findByMemberUuid(memberUuid: String): MemberEntity? {
+        return queryFactory.singleQuery {
+            selectMulti(entity(MemberEntity::class))
+            from(entity(MemberEntity::class))
+            where(column(MemberEntity::memberUuid).equal(memberUuid))
+        }
+    }
 }

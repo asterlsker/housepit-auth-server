@@ -5,12 +5,14 @@ import com.asterlsker.auth.domain.model.Phone
 import com.asterlsker.auth.domain.model.Provider
 import com.asterlsker.auth.domain.model.Role
 import org.apache.commons.lang3.RandomStringUtils
+import java.util.UUID
 
-// TODO client 에서 사용할 unique 한 UUID 만들기
 data class Member(
     val id: String? = null,
 
-    val userName: String? = null,
+    val memberUuid: String,
+
+    val userName: String,
 
     val phone: Phone? = null,
 
@@ -29,10 +31,13 @@ data class Member(
     }
 
     companion object {
-        fun new(email: Email) = Member(userName = createUserName(email))
+        fun new(email: Email) = Member(userName = createUserName(email), memberUuid = createUuid())
+
         private fun createUserName(email: Email): String {
             val number = RandomStringUtils.random(4, false, true)
             return "${email.id}#${number}"
         }
+
+        private fun createUuid() = UUID.randomUUID().toString()
     }
 }

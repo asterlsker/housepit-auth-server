@@ -40,4 +40,14 @@ class AuthCommand {
         val accessToken: String,
         val refreshToken: String
     )
+
+    data class LookupMemberRequest(
+        val memberUuid: String,
+        val accessToken: String
+    )
+
+    data class LookupMemberResponse(
+        val memberUuid: String,
+        val userName: String
+    )
 }

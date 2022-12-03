@@ -69,6 +69,15 @@ class AuthService(
         )
     }
 
+    @Transactional
+    suspend fun lookupMember(request: AuthCommand.LookupMemberRequest): AuthCommand.LookupMemberResponse {
+        val result = when (jwtProvider.validateToken(request.accessToken)) {
+            true -> memberReader.findByMemberUuid(request.memberUuid)
+            false -> throw InvalidTokenException()
+        } ?: throw NotExistMemberException()
+        return AuthCommand.LookupMemberResponse(memberUuid = result.memberUuid, userName = result.userName)
+    }
+
     private suspend fun validEmailAndRegisterMember(email: String, provider: Provider) {
         if (!memberReader.existsByEmail(email)) {
             val validEmail = Email(email)

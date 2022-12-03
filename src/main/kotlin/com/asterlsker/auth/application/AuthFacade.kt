@@ -34,4 +34,9 @@ class AuthFacade(
     suspend fun refresh(request: AuthCommand.RefreshRequest): AuthCommand.RefreshResponse {
         return authService.refresh(request)
     }
+
+    @Transactional
+    suspend fun lookupMember(request: AuthCommand.LookupMemberRequest): AuthCommand.LookupMemberResponse {
+        return authService.lookupMember(request)
+    }
 }

@@ -2,7 +2,6 @@ package com.asterlsker.auth.infrastructure.member.repository
 
 import com.asterlsker.auth.domain.member.Member
 import com.asterlsker.auth.domain.member.MemberReader
-import com.asterlsker.auth.domain.model.Email
 import com.asterlsker.auth.infrastructure.member.repository.query.MemberQueryRepository
 import com.asterlsker.auth.infrastructure.member.repository.query.MemberSocialLoginQueryRepository
 import org.springframework.stereotype.Repository
@@ -19,6 +18,11 @@ class MemberReaderImpl(
 
     override suspend fun findByEmail(email: String): Member? {
         val result = memberRepository.findByEmail(email)
+        return result?.toDomain()
+    }
+
+    override suspend fun findByMemberUuid(memberUuid: String): Member? {
+        val result = memberRepository.findByMemberUuid(memberUuid)
         return result?.toDomain()
     }
 }
