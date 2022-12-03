@@ -13,6 +13,7 @@ import com.asterlsker.housepit.grpc.SignInRequest
 import com.asterlsker.housepit.grpc.SignInResponse
 import com.asterlsker.housepit.grpc.SignInStatus
 import com.asterlsker.housepit.grpc.SignOutRequest
+import com.asterlsker.housepit.grpc.UpdateMemberRequest
 
 class AuthMapper {
 
@@ -78,6 +79,13 @@ class AuthMapper {
                 memberId = response.memberUuid
                 userName = response.userName
             }.build()
+        }
+
+        fun of(request: UpdateMemberRequest): AuthCommand.UpdateMemberRequest {
+            return AuthCommand.UpdateMemberRequest(
+                accessToken = request.accessToken,
+                userName = request.userName
+            )
         }
     }
 }

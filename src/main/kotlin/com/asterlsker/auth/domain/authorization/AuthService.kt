@@ -80,8 +80,20 @@ class AuthService(
             true -> memberReader.findByMemberUuid(request.memberUuid)
             false -> throw InvalidTokenException()
         } ?: throw NotExistMemberException()
-        return AuthCommand.LookupMemberResponse(memberUuid = result.memberUuid, userName = result.userName)
+        return AuthCommand.LookupMemberResponse(memberUuid = result.memberUuid, userName = result.getUserName())
     }
+
+    @Transactional
+    suspend fun updateMember(request: AuthCommand.UpdateMemberRequest) {
+        val payload = jwtProvider.getPayload(request.accessToken)
+        val member = memberReader.findByEmail(payload.email) ?: throw NotExistMemberException()
+        member.update(request.userName)
+        when (jwtProvider.validateToken(request.accessToken)) {
+            true -> memberStore.save(member)
+            false -> throw InvalidTokenException()
+        }
+    }
+
 
     private suspend fun validEmailAndRegisterMember(email: String, provider: Provider): Member {
         val member = memberReader.findByEmail(email)

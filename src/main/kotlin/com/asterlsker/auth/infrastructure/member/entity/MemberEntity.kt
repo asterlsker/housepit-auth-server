@@ -42,7 +42,7 @@ class MemberEntity(
             val entity = MemberEntity(
                 id = member.id?.toLong(),
                 memberUuid = member.memberUuid,
-                userName = member.userName,
+                userName = member.getUserName(),
                 phone = member.phone?.value,
             )
 

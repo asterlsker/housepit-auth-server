@@ -12,7 +12,7 @@ data class Member(
 
     val memberUuid: String,
 
-    val userName: String,
+    private var userName: String,
 
     val phone: Phone? = null,
 
@@ -30,7 +30,13 @@ data class Member(
         this.memberSocialLogins.add(MemberSocialLogin(provider = provider, email = email))
     }
 
+    fun update(userName: String) {
+        this.userName = userName
+    }
+
     fun getRoles() = memberRoles.map { it.role }
+
+    fun getUserName() = this.userName
 
     companion object {
         fun new(email: Email) = Member(userName = createUserName(email), memberUuid = createUuid())

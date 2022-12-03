@@ -39,4 +39,9 @@ class AuthFacade(
     suspend fun lookupMember(request: AuthCommand.LookupMemberRequest): AuthCommand.LookupMemberResponse {
         return authService.lookupMember(request)
     }
+
+    @Transactional
+    suspend fun updateMember(request: AuthCommand.UpdateMemberRequest) {
+        return authService.updateMember(request)
+    }
 }

@@ -50,4 +50,9 @@ class AuthCommand {
         val memberUuid: String,
         val userName: String
     )
+
+    data class UpdateMemberRequest(
+        val accessToken: String,
+        val userName: String
+    )
 }
