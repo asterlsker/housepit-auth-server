@@ -3,6 +3,7 @@ create table member (
       member_uuid varchar(255) not null,
       user_name varchar(255) not null,
       phone varchar(255) not null,
+      ci varchar(255) not null,
       created_at timestamp,
       created_by varchar(255),
       modified_date timestamp,

@@ -14,7 +14,9 @@ data class Member(
 
     private var userName: String,
 
-    val phone: Phone? = null,
+    private var phone: Phone? = null,
+
+    private var ci: String? = null,
 
     val memberRoles: MutableList<MemberRole> = mutableListOf(),
 
@@ -34,9 +36,16 @@ data class Member(
         this.userName = userName
     }
 
+    fun saveCertification(phone: Phone, ci: String) {
+        this.phone = phone
+        this.ci = ci
+    }
+
     fun getRoles() = memberRoles.map { it.role }
 
     fun getUserName() = this.userName
+    fun getPhone() = this.phone
+    fun getCi() = this.ci
 
     companion object {
         fun new(email: Email) = Member(userName = createUserName(email), memberUuid = createUuid())

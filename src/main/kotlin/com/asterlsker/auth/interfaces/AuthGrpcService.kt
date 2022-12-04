@@ -61,6 +61,7 @@ class AuthGrpService: AuthServiceGrpcKt.AuthServiceCoroutineImplBase() {
     }
 
     override suspend fun saveCertification(request: SaveCertificationRequest): Empty {
+        authFacade.saveCertification(AuthMapper.of(request))
         return super.saveCertification(request)
     }
 }

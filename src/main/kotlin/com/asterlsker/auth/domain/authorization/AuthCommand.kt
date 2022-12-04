@@ -1,5 +1,6 @@
 package com.asterlsker.auth.domain.authorization
 
+import com.asterlsker.auth.domain.model.Phone
 import com.asterlsker.auth.domain.model.Provider
 
 class AuthCommand {
@@ -54,5 +55,11 @@ class AuthCommand {
     data class UpdateMemberRequest(
         val accessToken: String,
         val userName: String
+    )
+
+    data class SaveCertificationRequest(
+        val phone: Phone,
+        val ci: String,
+        val accessToken: String
     )
 }

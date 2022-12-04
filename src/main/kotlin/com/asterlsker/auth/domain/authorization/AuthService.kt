@@ -88,12 +88,16 @@ class AuthService(
         val payload = jwtProvider.getPayload(request.accessToken)
         val member = memberReader.findByEmail(payload.email) ?: throw NotExistMemberException()
         member.update(request.userName)
-        when (jwtProvider.validateToken(request.accessToken)) {
-            true -> memberStore.save(member)
-            false -> throw InvalidTokenException()
-        }
+        memberStore.save(member)
     }
 
+    @Transactional
+    suspend fun saveCertification(request: AuthCommand.SaveCertificationRequest) {
+        val payload = jwtProvider.getPayload(request.accessToken)
+        val member = memberReader.findByEmail(payload.email) ?: throw NotExistMemberException()
+        member.saveCertification(request.phone, request.ci)
+        memberStore.save(member)
+    }
 
     private suspend fun validEmailAndRegisterMember(email: String, provider: Provider): Member {
         val member = memberReader.findByEmail(email)

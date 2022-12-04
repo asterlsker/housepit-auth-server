@@ -1,6 +1,7 @@
 package com.asterlsker.auth.interfaces.mapper
 
 import com.asterlsker.auth.domain.authorization.AuthCommand
+import com.asterlsker.auth.domain.model.Phone
 import com.asterlsker.auth.domain.model.Provider
 import com.asterlsker.housepit.grpc.DecodeRequest
 import com.asterlsker.housepit.grpc.DecodeResponse
@@ -9,6 +10,7 @@ import com.asterlsker.housepit.grpc.LookupMemberRequest
 import com.asterlsker.housepit.grpc.LookupMemberResponse
 import com.asterlsker.housepit.grpc.RefreshRequest
 import com.asterlsker.housepit.grpc.RefreshResponse
+import com.asterlsker.housepit.grpc.SaveCertificationRequest
 import com.asterlsker.housepit.grpc.SignInRequest
 import com.asterlsker.housepit.grpc.SignInResponse
 import com.asterlsker.housepit.grpc.SignInStatus
@@ -85,6 +87,14 @@ class AuthMapper {
             return AuthCommand.UpdateMemberRequest(
                 accessToken = request.accessToken,
                 userName = request.userName
+            )
+        }
+
+        fun of(request: SaveCertificationRequest): AuthCommand.SaveCertificationRequest {
+            return AuthCommand.SaveCertificationRequest(
+                phone = Phone(request.phone),
+                ci = request.ci,
+                accessToken = request.accessToken
             )
         }
     }

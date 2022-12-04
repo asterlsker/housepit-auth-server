@@ -44,4 +44,9 @@ class AuthFacade(
     suspend fun updateMember(request: AuthCommand.UpdateMemberRequest) {
         return authService.updateMember(request)
     }
+
+    @Transactional
+    suspend fun saveCertification(request: AuthCommand.SaveCertificationRequest) {
+        authService.saveCertification(request)
+    }
 }

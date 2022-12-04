@@ -30,6 +30,9 @@ class MemberEntity(
     @Column(name = "phone")
     val phone: String? = null,
 
+    @Column(name = "ci")
+    val ci: String? = null,
+
     @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
     val memberRoles: MutableList<MemberRoleEntity> = mutableListOf(),
 
@@ -43,7 +46,8 @@ class MemberEntity(
                 id = member.id?.toLong(),
                 memberUuid = member.memberUuid,
                 userName = member.getUserName(),
-                phone = member.phone?.value,
+                phone = member.getPhone()?.value,
+                ci = member.getCi()
             )
 
             entity.addRoles(*member.memberRoles.toTypedArray())
